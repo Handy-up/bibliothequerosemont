@@ -9,7 +9,7 @@
             a pourmission de permettre aux membres l’accès et l’utilisation
             de l’information et de la documentation dont il ont besoin
             pour les aider à réaliser certains des grands objectifs du Collège
-            de Rosemont, cette espace d’échange a de nombreux fonctionalités comme : l’emprunt de document et l’analyse de ces documets.
+            de Rosemont, cette espace d’échange a de nombreux fonctionalités comme : l’emprunt de document et l’analyse de ces documets.
         </p>
 
 <!--        Modal test -->
