@@ -1,5 +1,5 @@
 <?php
-  require ("include/header.php");
+  require("include/header.php");
 ?>
 <div class="container-fluid banner">
     <div class="container">
@@ -73,5 +73,5 @@
     </div>
 </div>
 <?php
-include ("include/footer.php");
+include("include/footer.php");
 ?>

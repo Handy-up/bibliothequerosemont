@@ -1,5 +1,5 @@
 <?php
-require ("include/header.php");
+require("include/header.php");
 ?>
 
 <div class="container-fluid banner_profil">
@@ -112,5 +112,5 @@ require ("include/header.php");
 
 
 <?php
-include ("include/footer.php");
+include("include/footer.php");
 ?>

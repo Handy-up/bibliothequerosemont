@@ -1,5 +1,5 @@
 <?php
-require ("include/header.php");
+require("include/header.php");
 ?>
 
 <div class="container-fluid main_form">
@@ -52,5 +52,5 @@ require ("include/header.php");
 </div>
 
 <?php
-require ("include/footer.php");
+require("include/footer.php");
 ?>

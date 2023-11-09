@@ -16,7 +16,7 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <?php
-                                include "nav.php"
+                            include "nav.php"
                             ?>
                         </ul>
                         <div class="profile">
