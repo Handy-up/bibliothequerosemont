@@ -1,7 +1,7 @@
 <?php
 
 // inclure la configuration
-include_once ("Config/configBD.interface.php");
+include_once("Config/ConfigBD.interface.php");
 class connexionBD
 {
     public static $instance =  null;
