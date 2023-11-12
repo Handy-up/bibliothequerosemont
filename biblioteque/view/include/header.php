@@ -12,15 +12,27 @@
 <body>
 
 <?php
-// Gestion des entetes
-switch ($_SERVER["SCRIPT_NAME"]){
-    case "/PHP/biblioteque/index.php":
-    case "/PHP/biblioteque/connection.php":
-    case "/PHP/biblioteque/inscription.php": include "header_offLine.php";
+// Gestion des entêtes
+$requestUri = $_SERVER["REQUEST_URI"];
+
+// Utiliser parse_url pour diviser l'URL en composants
+$urlComponents = parse_url($requestUri);
+
+// Extraire le chemin du fichier
+$path = $urlComponents['path'];
+
+switch ($path) {
+    case "/PHP/biblioteque/view/index.php":
+    case "/PHP/biblioteque/view/connection.php":
+    case "/PHP/biblioteque/view/inscription.php":
+        include "header_offLine.php";
         break;
-    case "/PHP/bibliothèque/admin.php":include "ok.php";
+    case "/PHP/biblioteque/view/admin.php":
+        include "ok.php";
         break;
-    default: include "header_onLine.php";
+    default:
+        include "header_onLine.php";
 }
-//echo $_SERVER["SCRIPT_NAME"]; biblioteque/index.php
+//echo $path; // Code de tste
 ?>
+
