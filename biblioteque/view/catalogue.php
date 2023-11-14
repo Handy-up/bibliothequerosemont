@@ -5,13 +5,6 @@ include_once ("../Model/User.php");
 include_once ("components.php");
 $user = new User("Jean","Pierre","1234","pierre.jpg","98kkf","9843kd",date("H:i:s"),true);
 $roman= new \Model\Livre("La mere","Pierre","2 eme",array("Architecture ","Plage"), "Très belle ouvrage","book2.jpg","23",$user,$user,$user,123,true);
-if (isset($_GET["message"])){
-    $err = $_GET["message"];
-    foreach ($err as $item){
-        echo $item;
-    }
-
-}
 ?>
 
 <div class="container-fluid banner_sh">
