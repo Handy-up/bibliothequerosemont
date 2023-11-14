@@ -24,7 +24,7 @@ require("include/header.php");
     </div>
 
     <div class="container profile_space">
-        <img src="image/profil.jpeg" class="rounded-circle" alt="...">
+        <img src="image/default-avatar%20copie.jpg" class="rounded-circle" alt="...">
     </div>
 
 </div>

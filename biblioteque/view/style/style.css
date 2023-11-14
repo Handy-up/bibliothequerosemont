@@ -277,16 +277,73 @@ nav{
     padding: 38px;
 }
 
-/*User Space*/
+/*User Space Catalogue*/
 .banner_sh{
+    padding: 24px;
     width: 100%;
-    height: 555px;
+    height: 355px;
     flex-shrink: 0;
-    background-color: var(--dark_grad);
+    background: var(--dark_grad);
     fill: var(--dark);
     stroke-width: 1px;
     stroke: var(--dark);
     /*border: 3px solid #ffc720;*/
+}
+
+.card_list{
+    margin: 20px;
+    /*border: 3px solid #ffc720;*/
+    background-color: #D9D9D9;
+}
+
+.card{
+    margin: 12px;
+}
+
+.image > img{
+    /*border: 3px solid #ffc720;*/
+    height: 45vh;
+    /*width: 100%;*/
+}
+
+.action_card{
+    /*border: 3px solid #ffc720;*/
+    padding: 12px;
+}
+
+.action_card > form > .btn{
+    /*border: 3px solid #ffc720;*/
+    margin-right: 20px;
+}
+
+.banner_sh> h2{
+    margin: 12px;
+    padding: 25px;
+    color: var(--blanc);
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+/*Paramètre page*/
+
+.thicker-separator {
+    border-top: 2px solid var(--dark);
+}
+
+.forme_params{
+    margin: 20px;
+    background-color: #D9D9D9;
+    padding: 30px;
+}
+
+.compte{
+    margin: 20px;
+}
+
+.tite_modal{
+    /*border: 1px solid black;*/
 }
 
 /* On screens that are 992px or less, set the background color to blue */
@@ -337,5 +394,14 @@ nav{
 
     .profile>img{
         float: right;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+    /*    Card*/
+    .image > img{
+        display: none;
     }
 }

@@ -11,6 +11,8 @@ class Livre
     private String $editor;
     private array $key_words;
     private String $description;
+    private ?String $url_cover;
+
     private String $evaluation;
     private User $host;
     private User $current_holder;
@@ -36,6 +38,7 @@ class Livre
         string $editor,
         array $key_words,
         string $description,
+        string $cover = null,
         string $evaluation = null,
         User $host,
         User $current_holder,
@@ -48,6 +51,7 @@ class Livre
         $this->editor = $editor;
         $this->key_words = $key_words;
         $this->description = $description;
+        $this->url_cover = $cover;
         $this->evaluation = $evaluation;
         $this->host = $host;
         $this->current_holder = $current_holder;
@@ -104,6 +108,16 @@ class Livre
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function getUrlCover(): ?string
+    {
+        return $this->url_cover;
+    }
+
+    public function setUrlCover(?string $url_cover): void
+    {
+        $this->url_cover = $url_cover;
     }
 
     public function getEvaluation(): string
