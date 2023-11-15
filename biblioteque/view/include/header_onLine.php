@@ -1,7 +1,7 @@
 <div class="container-fluid head_online">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a href="index.php" class="logo_red">
+                <a href="catalogue.php" class="logo_red">
                     <img src="image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
