@@ -22,12 +22,12 @@ $urlComponents = parse_url($requestUri);
 $path = $urlComponents['path'];
 
 switch ($path) {
-    case "/PHP/biblioteque/view/index.php":
-    case "/PHP/biblioteque/view/connection.php":
-    case "/PHP/biblioteque/view/inscription.php":
+    case "/biblioteque/view/index.php":
+    case "/biblioteque/view/connection.php":
+    case "/biblioteque/view/inscription.php":
         include "header_offLine.php";
         break;
-    case "/PHP/biblioteque/view/admin.php":
+    case "/biblioteque/view/admin.php":
         include "ok.php";
         break;
     default:
