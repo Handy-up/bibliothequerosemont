@@ -29,7 +29,7 @@ class Departement {
     }
 
     public function envoyerNotification($notification, $destinataire) {
-        // ...
+        
     }
 
     public function getLivres() {
