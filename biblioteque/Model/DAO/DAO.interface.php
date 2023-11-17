@@ -2,7 +2,7 @@
 //include of connexion class
 include_once("ConnexionBD.php");
 
-interface DAO
+interface DaoUser
 {
     // implementation of CRUD methods
 

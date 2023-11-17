@@ -1,6 +1,7 @@
 <?php
 class User
 {
+    private int $id;
     private string $lastName;
     private string $firstName;
     private string $password;
@@ -9,6 +10,7 @@ class User
     private string $registrationKey;
     private string $registrationDate;
     private bool $status;
+    private String $fonction;
 
     /**
      * @param string $lastName
@@ -21,6 +23,7 @@ class User
      * @param bool $status
      */
     public function __construct(
+        int $id_user,
         string $lastName,
         string $firstName,
         string $password,
@@ -28,8 +31,10 @@ class User
         string $shareCode,
         string $registrationKey,
         string $registrationDate = null,
-        bool $status = true)
+        bool $status = true,
+        string $fonction)
     {
+        $this->id =$id_user;
         $this->lastName = $lastName;
         $this->firstName = $firstName;
         $this->password = $password;
@@ -38,6 +43,7 @@ class User
         $this->registrationKey = $registrationKey;
         $this->registrationDate = $registrationDate;
         $this->status = $status;
+        $this->fonction = $fonction;
     }
 
     public function getLastName(): string
@@ -119,10 +125,32 @@ class User
         // implémentation
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getFonction(): string
+    {
+        return $this->fonction;
+    }
+
+    public function setFonction(string $fonction): void
+    {
+        $this->fonction = $fonction;
+    }
+
+
+
     public function __toString(): string
     {
         // TODO: Implement __toString() method.
-        return "[code de partage : $this->shareCode ] Nom : $this->firstName Prénom : $this->lastName Validité du compte : ".($this->status)?" Compte valide":" Compte non valide";
+        return "[code de partage : $this->shareCode ] Nom : $this->firstName Prénom : $this->lastName Validité du compte : " . ($this->status ? "Compte valide" : "Compte non valide");
 
     }
 
