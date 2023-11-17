@@ -1,4 +1,5 @@
 <?php
+//Commencé par Lleyton
 class Departement {
     private $utilisateurs = [];
     private $administrateur;
@@ -29,7 +30,7 @@ class Departement {
     }
 
     public function envoyerNotification($notification, $destinataire) {
-        
+        $this->notifications[] = ["destinataire" => $destinataire, "notification" => $notification];
     }
 
     public function getLivres() {
@@ -49,7 +50,26 @@ class Departement {
    
 
     public function rechercherUnLivre($criteres) {
-        //...
+        $resultats = [];
+
+        foreach ($this->livres as $livre) {
+            $correspondAuxCritères = true;
+    
+            foreach ($criteres as $critere => $valeur) {
+                
+                if (!isset($livre[$critere]) || $livre[$critere] !== $valeur) {
+                    $correspondAuxCritères = false;
+                    break; 
+                }
+            }
+    
+           
+            if ($correspondAuxCritères) {
+                $resultats[] = $livre;
+            }
+        }
+    
+        return $resultats;
     }
 
     public function getDemande() {

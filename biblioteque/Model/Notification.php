@@ -1,5 +1,5 @@
 <?php
-
+//Commencé par Lleyton
 class Notification {
       private $dateEnvoi;
     private $destinataire;
