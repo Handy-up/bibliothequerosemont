@@ -4,9 +4,9 @@ include_once ("../Model/User.php");
 //Data
 $user = UtilisateurClassDao::showAll();
 
-foreach ($user as $item){
-    echo "<br> $item </br>";
-}
+//foreach ($user as $item){
+//    echo "<br> $item </br>";
+//}
 
 // Traitement
 
@@ -20,18 +20,25 @@ if (isset($_POST["inscription"])){
     $pass_word = $_POST['mot_depasse'];
     $pass_word_bis = $_POST['mot_depasse_confirm'];
 //    verification clè
-    $message = "";
     if ($register_key !="PHH" or $pass_word != $pass_word_bis){
         $cle = 0;
         $pas = 0;
-        if ($register_key !="PHH"){
+
+        if ($register_key != "PHH") {
             $cle = 1;
         }
-        if ($pass_word != $pass_word_bis){
+
+        if ($pass_word != $pass_word_bis) {
             $pas = 1;
         }
-        $redirect_url_inscription = "/PHP/biblioteque/view/inscription.php?cle=$cle&pass=$pas";
-//        header("Location: " . $redirect_url_inscription);
+
+// Encodage des données avant de les envoyer dans l'URL
+        $encodedCle = urlencode(base64_encode($cle));
+        $encodedPas = urlencode(base64_encode($pas));
+
+// Construire l'URL avec les données encodées
+        $redirect_url_inscription = "/PHP/biblioteque/view/inscription.php?cle=$encodedCle&pass=$encodedPas";
+       header("Location: " . $redirect_url_inscription);
     }else{
 //        header("Location: " . $redirect_url_connection);
     }

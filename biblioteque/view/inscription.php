@@ -10,16 +10,21 @@ require("include/header.php");
         <form method="POST" action="../Controler/ControllerInscription.php">
             <div class="mb-3">
                 <?php
-                // Vérifie si le message GET "erreur" a une valeur de 1
-                if (isset($_GET['cle']) && $_GET['cle'] == 1) {
-                    // Affiche un message d'erreur à côté de la balise label
-                    echo '<label for="exampleInputEmail1" class="form-label error text-danger">Clé d\'inscription <span class="error-message">Erreur : La clé est incorrecte</span></label>';
-                } else {
-//                    echo $_GET['cle'];
-                    // Aucune erreur, affiche la balise label normalement
-                    echo '<label for="exampleInputEmail1" class="form-label">Clé d\'inscription</label>';
+                // Récupération des données depuis l'URL
+                $encodedCle = isset($_GET['cle']) ? $_GET['cle'] : '';
+                // Décodage des données
+                $cle = base64_decode(urldecode($encodedCle));
+
+                // Vérifier si les conditions d'erreur sont remplies
+                if ($cle == 1) {
+                    // Afficher un message d'erreur à côté du champ pour la clé
+                    echo '<span class="error-message text-danger">Clé d\'inscription incorrecte</span>';
+                }else{
+                    echo '<span class="text-white">Clé d\'inscription</span>';
                 }
+
                 ?>
+
                 <input type="password" class="form-control" id="cle_inscription" name="cle_inscription" placeholder="PH22098" required>
             </div>
             <div class="row g-3">
@@ -40,10 +45,15 @@ require("include/header.php");
                 <input type="password" class="form-control" id="password2" name="mot_depasse_confirm" required>
 
                 <?php
-                // Vérifier si le message GET "erreur" a une valeur de 1
-                if (isset($_GET['pass']) && $_GET['pass'] == 1) {
+                // Récupération des données depuis l'URL
+                $encodedPas = isset($_GET['pass']) ? $_GET['pass'] : '';
+                // Décodage des données
+                $pas = base64_decode(urldecode($encodedPas));
+
+                // Vérifier si la condition d'erreur est remplie
+                if ($pas == 1) {
                     // Afficher un message d'erreur à côté du champ
-                    echo '<span class="error-message text-danger">Erreur : Les mots de passe ne correspondent pas</span>';
+                    echo '<span class="error-message text-danger">Les mots de passe ne correspondent pas</span>';
                 }
                 ?>
             </div>
