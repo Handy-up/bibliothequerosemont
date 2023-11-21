@@ -8,7 +8,7 @@ class connexionBD
 
     //public function __construct(){}
 
-    public static function getInstanceT(): ?PDO
+    public static function getInstanceT()
     {
 //
         if (self::$instance == null){
@@ -29,7 +29,7 @@ class connexionBD
         return self::$instance;
     }
 
-    public static function fermerConnexion(): void
+    public static function fermerConnexion()
     {
         self::$instance=null;
     }
