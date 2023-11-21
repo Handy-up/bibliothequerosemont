@@ -24,6 +24,9 @@ $path = $urlComponents['path'];
 // Extraire le nom du fichier à partir du chemin
 $page = basename($path);
 
+// Utiliser DIRECTORY_SEPARATOR pour rendre le chemin portable
+$separator = DIRECTORY_SEPARATOR;
+
 switch ($page) {
     case "index.php":
     case "connection.php":
@@ -37,4 +40,5 @@ switch ($page) {
         include "header_onLine.php";
 }
 ?>
+
 
