@@ -7,8 +7,7 @@ include_once("DAO.interface.php");
 class UtilisateurClassDao implements DaoUser
 {
 
-    static public function showAll(): array
-    {
+    static public function showAll(){
         $user = null;
         try {
             $con = ConnexionBD::getInstanceT();

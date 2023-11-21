@@ -2,8 +2,7 @@
 //include of connexion class
 include_once("ConnexionBD.php");
 
-interface DaoUser
-{
+interface DaoUser{
     // implementation of CRUD methods
 
     // Fonction pour afficher une table sans contraint

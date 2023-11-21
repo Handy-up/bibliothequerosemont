@@ -3,7 +3,7 @@ require("include/header.php");
 ?>
 
 <div class="container">
-    <h2>Paramètres</h2>
+    <h2>Notifications</h2>
     <hr class="my-4 thicker-separator">
 <!-- Start -->
     <div class="list-group">
