@@ -2,29 +2,28 @@
 include_once ("../Model/DAO/UtilisateurClassDao.php");
 include_once ("../Model/User.php");
 //Data
-//$user = UtilisateurClassDao::showAll();
-
-//foreach ($user as $item){
-//    echo "<br> $item </br>";
-//}
 
 // Traitement
 
 $redirect_url_connection = "../view/connection.php";
 // Variable attendu
 if (isset($_POST["inscription"])){
-    echo "form send";
     $register_key = $_POST['cle_inscription'];
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
     $pass_word = $_POST['mot_depasse'];
     $pass_word_bis = $_POST['mot_depasse_confirm'];
+    $info = array($register_key,$nom,$prenom,$pass_word);
+    //Data
+    $user = UtilisateurClassDao::insert($info);
+//    echo $user;
+
 //    verification clè
-    if ($register_key !="PHH" or $pass_word != $pass_word_bis){
+    if (!$user or $pass_word != $pass_word_bis){
         $cle = 0;
         $pas = 0;
 
-        if ($register_key != "PHH") {
+        if (!$user) {
             $cle = 1;
         }
 

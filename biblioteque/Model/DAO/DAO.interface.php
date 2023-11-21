@@ -18,7 +18,7 @@ interface DaoUser{
     static public function update($news);
 
     //Foncrion pour ajouter
-    static public function insert($object);
+    static public function insert($infoUtilisateur);
 
     //Fonction pour supprimer
     static public function delete($object);

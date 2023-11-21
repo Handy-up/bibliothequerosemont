@@ -1,33 +1,47 @@
 <?php
 require("include/header.php");
+include ("../Model/User.php");
+include_once ("../Model/DAO/UtilisateurClassDao.php");
+
+session_start();
+if (!isset($_SESSION['currentUser'])){
+    $redirect_url_connexion = "/PHP/biblioteque/view/connection.php";
+    header("Location: " . $redirect_url_connexion);
+}
+$user  = $_SESSION['currentUser'];
+$_SESSION['currentUser_id'] = $user->getId();
 ?>
 
-<div class="container-fluid banner_profil">
-    <div class="separateur"></div>
-    <div class="info">
-        <div>
-            <span>Nom : </span> <span>User Name</span>
+    <div class="container-fluid banner_profil">
+        <div class="separateur"></div>
+        <div class="info">
+            <div>
+                <span>Nom : </span> <span><?php echo $user->getLastName(); ?></span>
+            </div>
+            <div>
+                <span>Prénom : </span> <span><?php echo $user->getFirstName(); ?></span>
+            </div>
+            <div>
+                <span>Statut : </span> <span><?php echo $user->isStatus() ? 'Actif' : 'Inactif'; ?></span>
+            </div>
+            <div>
+                <span>Membre depuis : </span> <span><?php echo $user->getRegistrationDate(); ?></span>
+            </div>
+            <br>
+            <div>
+                <span>Clé d'inscription :</span> <span><?php echo $user->getRegistrationKey(); ?></span>
+            </div>
         </div>
-        <div>
-            <span>Prénom </span> <span>User Last Name</span>
-        </div>
-        <div>
-            <span>Statue :  </span> <span>Membre Statu membre(actif/inactif)</span>
-        </div>
-        <div>
-            <span>Menbre depuis : </span> <span>User date d'inscription</span>
-        </div>
-        <br>
-        <div>
-            <span>Clé d’inscrpition :</span> <span>XXXXXXXXXXXXX</span>
+
+        <div class="container profile_space">
+            <?php
+            // Vérifiez si l'utilisateur a une photo de profil définie
+            $profilePhoto = $user->getProfilePhoto();
+            $profilePhotoUrl = $profilePhoto ? $profilePhoto : 'image/default-avatar%20copie.jpg';
+            ?>
+            <img src="<?php echo $profilePhotoUrl; ?>" class="rounded-circle" alt="...">
         </div>
     </div>
-
-    <div class="container profile_space">
-        <img src="image/default-avatar%20copie.jpg" class="rounded-circle" alt="...">
-    </div>
-
-</div>
 
 <div class="container main_user_activities">
     <br>
