@@ -7,39 +7,39 @@ require("include/header.php");
 
     <div class="forme_params">
         <form action="">
-            <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1">@</span>
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="Assiobo" id="nom">
             </div>
 
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <span class="input-group-text" id="basic-addon2">@example.com</span>
+            <div class="form-group">
+                <label for="prenom">Prenom</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="Eloge" id="prenom">
             </div>
 
-            <div class="mb-3">
-                <label for="basic-url" class="form-label">Your vanity URL</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
-                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
-                </div>
-                <div class="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" aria-describedby="basic-addon1" value="0123456@qweerty.com" id="email">
             </div>
 
-            <div class="input-group mb-3">
-                <span class="input-group-text">$</span>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                <span class="input-group-text">.00</span>
+            <div class="form-group">
+                <label for="mdp">Password</label>
+                <input type="password" class="form-control" aria-describedby="basic-addon1" value="*******" id="mdp">
             </div>
 
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Username" aria-label="Username">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+            <div class="form-group">
+                <label for="code">Code de partage</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="01234" id="code">
             </div>
-
+            <br>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </div>
+            <br>
+            <div class="col-12">
+                <button type="button" class="btn btn-outline-primary">Suspendre mon compte</button>
+                <label for="">|</label>
+                <button type="button" class="btn btn-outline-danger">Supprimer mon compte</button>
             </div>
         </form>
     </div>
