@@ -13,18 +13,18 @@ if (isset($_POST["pp"])) {
     $enr = $querry->fetchAll(PDO::FETCH_ASSOC);
     ConnexionBD::fermerConnexion();
 
-    foreach ($enr as $enr) {
-        $id_livre = $enr['id_livre'];
-        $titre = $enr['titre'];
-        $auteur = $enr['auteur'];
-        $edition = $enr['edition'];
-        $mots_cles = $enr['mots_cles'];
-        $description = $enr['description'];
-        $evaluations = $enr['evaluations'];
-        $disponible = $enr['disponible'];
-        $proprietaire = $enr['proprietaire'];
-        $detenteur_actuel = $enr['detenteur_actuel'];
-        $detenteur_precedent = $enr['detenteur_precedent'];
+    foreach ($enr as $enrT) {
+        $id_livre = $enrT['id_livre'];
+        $titre = $enrT['titre'];
+        $auteur = $enrT['auteur'];
+        $edition = $enrT['edition'];
+        $mots_cles = $enrT['mots_cles'];
+        $description = $enrT['description'];
+        $evaluations = $enrT['evaluations'];
+        $disponible = $enrT['disponible'];
+        $proprietaire = $enrT['proprietaire'];
+        $detenteur_actuel = $enrT['detenteur_actuel'];
+        $detenteur_precedent = $enrT['detenteur_precedent'];
 
         // Effectuez ici le traitement nécessaire pour chaque colonne
         echo "ID Livre: $id_livre, Titre: $titre, Auteur: $auteur, Edition: $edition, Mots-clés: $mots_cles, Description: $description, Evaluations: $evaluations, Disponible: $disponible, Propriétaire: $proprietaire, Détenteur actuel: $detenteur_actuel, Détenteur précédent: $detenteur_precedent<br>";

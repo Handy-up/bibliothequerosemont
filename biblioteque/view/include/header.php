@@ -21,18 +21,20 @@ $urlComponents = parse_url($requestUri);
 // Extraire le chemin du fichier
 $path = $urlComponents['path'];
 
-switch ($path) {
-    case "/biblioteque/view/index.php":
-    case "/biblioteque/view/connection.php":
-    case "/biblioteque/view/inscription.php":
+// Extraire le nom du fichier à partir du chemin
+$page = basename($path);
+
+switch ($page) {
+    case "index.php":
+    case "connection.php":
+    case "inscription.php":
         include "header_offLine.php";
         break;
-    case "/biblioteque/view/admin.php":
+    case "admin.php":
         include "ok.php";
         break;
     default:
         include "header_onLine.php";
 }
-//echo $path; // Code de tste
 ?>
 
