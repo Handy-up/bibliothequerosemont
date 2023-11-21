@@ -5,7 +5,7 @@ include_once ("../Model/User.php");
 
 // Traitement
 
-$redirect_url_connection = "/PHP/biblioteque/view/connection.php";
+$redirect_url_connection = "../view/connection.php";
 // Variable attendu
 if (isset($_POST["inscription"])){
     $register_key = $_POST['cle_inscription'];
@@ -36,7 +36,7 @@ if (isset($_POST["inscription"])){
         $encodedPas = urlencode(base64_encode($pas));
 
 // Construire l'URL avec les données encodées
-        $redirect_url_inscription = "/PHP/biblioteque/view/inscription.php?cle=$encodedCle&pass=$encodedPas";
+        $redirect_url_inscription = "../view/inscription.php?cle=$encodedCle&pass=$encodedPas";
        header("Location: " . $redirect_url_inscription);
     }else{
         header("Location: " . $redirect_url_connection);
