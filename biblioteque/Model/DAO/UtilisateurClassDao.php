@@ -42,7 +42,33 @@ class UtilisateurClassDao implements DaoUser
 
     static public function showFor($keyWord)
     {
-        // TODO: Implement showFor() method.
+        $user = null;
+        try {
+            $con = ConnexionBD::getInstanceT();
+        }catch (Exception $e){
+            throw new Exception("Connexion Impossible ".$e);
+        }
+//        Recupéré les utilisateurs
+        $querry = $con->prepare("select * from bibliotheque_departemental.Utilisateur where id_utilisateur=?");
+        $querry->execute(array($keyWord));
+        $data = $querry->fetch();
+
+        $user = new User(
+            $data['id_utilisateur'],
+            $data['nom'],
+            $data['prenom'],
+            $data['mot_de_passe'],
+            $data['photo_profile'],
+            $data['code_de_partage'],
+            $data['cle_inscription'],
+            $data['date_inscription'],
+            $data['statut'],
+            $data['fonction']
+        );
+
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
+        return $user;
     }
 
     static public function showIf($conditions)
@@ -80,7 +106,25 @@ class UtilisateurClassDao implements DaoUser
 
     static public function update($news)
     {
-        // TODO: Implement update() method.
+        $user = null;
+        try {
+            $con = ConnexionBD::getInstanceT();
+        }catch (Exception $e){
+            throw new Exception("Connexion Impossible ".$e);
+        }
+        $query = $con->prepare("UPDATE bibliotheque_departemental.Utilisateur SET nom=?, prenom=?, photo_profile=?, code_de_partage=?, mot_de_passe=?  WHERE id_utilisateur=?");
+        $query->execute(
+            array(
+                $news->getLastName(),
+                $news->getFirstName(),
+                $news->getProfilePhoto(),
+                $news->getShareCode(),
+                $news->getPassword(),
+                $news->getId()
+            )
+        );
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
     }
 
     static public function insert($infoUtilisateur): bool
@@ -94,13 +138,14 @@ class UtilisateurClassDao implements DaoUser
         try {
             // Utilisez la procédure stockée InsererNouvelUtilisateur
             $query = $con->prepare("CALL InsererNouvelUtilisateur(:cle_inscription, :nom, :prenom, :mot_de_passe)");
-
             $query->bindParam(":cle_inscription", $infoUtilisateur[0]);
             $query->bindParam(":nom", $infoUtilisateur[1]);
             $query->bindParam(":prenom", $infoUtilisateur[2]);
             $query->bindParam(":mot_de_passe", $infoUtilisateur[3]);
             // Exécutez la requête
             $query->execute();
+            $query->closeCursor();
+            ConnexionBD::fermerConnexion();
             // Retourne vrai si tout s'est bien passé
             return true;
 
@@ -109,6 +154,7 @@ class UtilisateurClassDao implements DaoUser
             echo "Erreur d'insertion : " . $e->getMessage();
             return false;
         }
+
     }
 
 
