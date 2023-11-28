@@ -34,7 +34,7 @@ switch ($page) {
         include "header_offLine.php";
         break;
     case "admin.php":
-        include "ok.php";
+        include "header_admin.php";
         break;
     default:
         include "header_onLine.php";

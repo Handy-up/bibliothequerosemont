@@ -1,5 +1,9 @@
 <?php
 
+use Model\Livre;
+
+include_once ("DaoBook.php");
+
 class LivreClassDao implements DaoBook
 {
 

@@ -1,4 +1,5 @@
 <?php
+include_once("ConnexionBD.php");
 
 interface DaoBook
 {
