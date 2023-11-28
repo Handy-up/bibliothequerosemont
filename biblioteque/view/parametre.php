@@ -1,49 +1,65 @@
 <?php
 require("include/header.php");
+
+
+include ("../Model/User.php");
+include_once ("../Model/DAO/UtilisateurClassDao.php");
+// Récupération de la saision
+session_start();
+if (!isset($_SESSION['currentUser'])){
+    $redirect_url_connexion = "/PHP/biblioteque/view/connection.php";
+    header("Location: " . $redirect_url_connexion);
+}
+$user  = $_SESSION['currentUser'];
+$_SESSION['currentUser_id'] = $user->getId();
 ?>
 <div class="container">
     <h2>Paramètres</h2>
     <hr class="my-4 thicker-separator">
 
     <div class="forme_params">
-        <form action="">
-            <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" value="Assiobo" id="nom">
+        <form method="post" action="../Controler/CotrollerParamètres.php">
+            <div class="mb-3">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="<?php echo $user->getLastName(); ?>" name="nom">
             </div>
 
-            <div class="form-group">
-                <label for="prenom">Prenom</label>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" value="Eloge" id="prenom">
+            <div class="mb-3">
+                <label for="prenom" class="form-label">Prenom</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" value="<?php echo $user->getFirstName();?>" name="prenom">
             </div>
 
-            <div class="form-group">
-                <label for="email">E-mail</label>
-                <input type="email" class="form-control" aria-describedby="basic-addon1" value="0123456@qweerty.com" id="email">
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" aria-describedby="basic-addon1" name="mail" value="0123456@qweerty.com" id="email">
             </div>
 
-            <div class="form-group">
-                <label for="mdp">Password</label>
-                <input type="password" class="form-control" aria-describedby="basic-addon1" value="*******" id="mdp">
+            <div class="mb-3">
+                <label for="mdp" class="form-label">Password</label>
+                <input type="password" class="form-control" aria-describedby="basic-addon1" name="passe_wrd" value="<?php echo $user->getPassword(); ?>" id="mdp">
             </div>
 
-            <div class="form-group">
-                <label for="code">Code de partage</label>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" value="01234" id="code">
+            <div class="mb-3">
+                <label for="code" class="form-label">Code de partage</label>
+                <input type="text" class="form-control" aria-describedby="basic-addon1" name="code_partage" value="<?php echo $user->getShareCode(); ?>" id="code">
             </div>
             <br>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                <button type="submit" name="send_params" class="btn btn-primary">Sauvegarder</button>
             </div>
             <br>
-            <div class="col-12">
-                <button type="button" class="btn btn-outline-primary">Suspendre mon compte</button>
-                <label for="">|</label>
-                <button type="button" class="btn btn-outline-danger">Supprimer mon compte</button>
-            </div>
         </form>
     </div>
+    <div class="col-12 d-flex justify-content-end w-auto">
+        <button type="button" class="btn btn-outline-primary">Suspendre mon compte</button>
+        <label style="margin: 5px">|</label>
+        <form method="post" action="../Controler/CotrollerParamètres.php">
+            <button type="submit" class="btn btn-outline-danger" name="log-out">Deconnection</button>
+        </form>
+    </div>
+    <br>
 </div>
 <?php
+
 include("include/footer.php");
 ?>

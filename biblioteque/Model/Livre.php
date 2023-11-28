@@ -12,11 +12,10 @@ class Livre
     private array $key_words;
     private String $description;
     private ?String $url_cover;
-
     private String $evaluation;
-    private User $host;
-    private User $current_holder;
-    private User $previous_holder;
+    private int $host_id;
+    private int $current_holder_id;
+    private ?int $previous_holder_id;
     private int $reference_code;
     private bool $status;
 
@@ -27,24 +26,22 @@ class Livre
      * @param array $key_words
      * @param String $description
      * @param string|null $evaluation
-     * @param User $host
-     * @param User $current_holder
-     * @param User|null $previous_holder
-     * @param int $reference_code
+     * @param Int $host_id
+     * @param int $current_holder_id
+     * @param int|null $previous_holder_id
      */
     public function __construct(
         string $title,
         string $author,
         string $editor,
-        array $key_words,
+        array  $key_words,
         string $description,
         string $cover = null,
         string $evaluation = null,
-        User $host,
-        User $current_holder,
-        User $previous_holder= null,
-        int $reference_code,
-        bool $status = true)
+        int    $host_id,
+        ?int    $current_holder_id,
+        ?int $previous_holder_id = null,
+        bool   $status = true)
     {
         $this->title = $title;
         $this->author = $author;
@@ -53,10 +50,9 @@ class Livre
         $this->description = $description;
         $this->url_cover = $cover;
         $this->evaluation = $evaluation;
-        $this->host = $host;
-        $this->current_holder = $current_holder;
-        $this->previous_holder = $previous_holder;
-        $this->reference_code = $reference_code;
+        $this->host_id = $host_id;
+        $this->current_holder_id = $current_holder_id;
+        $this->previous_holder_id = $previous_holder_id;
         $this->status = $status;
     }
 
@@ -130,34 +126,34 @@ class Livre
         $this->evaluation = $evaluation;
     }
 
-    public function getHost(): User
+    public function getHost(): int
     {
-        return $this->host;
+        return $this->host_id;
     }
 
-    public function setHost(User $host): void
+    public function setHost(int $host): void
     {
-        $this->host = $host;
+        $this->host_id = $host;
     }
 
-    public function getCurrentHolder(): User
+    public function getCurrentHolder(): int
     {
-        return $this->current_holder;
+        return $this->current_holder_id;
     }
 
-    public function setCurrentHolder(User $current_holder): void
+    public function setCurrentHolder(int $current_holder): void
     {
-        $this->current_holder = $current_holder;
+        $this->current_holder_id = $current_holder;
     }
 
-    public function getPreviousHolder(): User
+    public function getPreviousHolder(): int
     {
-        return $this->previous_holder;
+        return $this->previous_holder_id;
     }
 
-    public function setPreviousHolder(User $previous_holder): void
+    public function setPreviousHolder(int $previous_holder): void
     {
-        $this->previous_holder = $previous_holder;
+        $this->previous_holder_id = $previous_holder;
     }
 
     public function getReferenceCode(): int
@@ -185,7 +181,7 @@ class Livre
     public function __toString(): string
     {
         // TODO: Implement __toString() method.
-        return "[Code de ref : $this->reference_code] Titre : $this->title Auteur : $this->author Description : $this->description Disponibilité : ".($this->status)?" disponible":" non disponible"." Propriétaire : $this->host";
+        return "[Book]</br>Titre : $this->title</br>Auteur : $this->author</br>Description : $this->description</br> Disponibilité : " . ($this->status ? "disponible" : "non disponible") . "</br>Propriétaire : $this->host_id".var_dump($this->key_words);
     }
 
 

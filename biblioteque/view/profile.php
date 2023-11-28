@@ -19,7 +19,7 @@ $_SESSION['currentUser_id'] = $user->getId();
                 <span>Nom : </span> <span><?php echo $user->getLastName(); ?></span>
             </div>
             <div>
-                <span>Prénom : </span> <span><?php echo $user->getFirstName(); ?></span>
+                <span>Prénom : </span> <span><?php echo $user->getFirstName();?></span>
             </div>
             <div>
                 <span>Statut : </span> <span><?php echo $user->isStatus() ? 'Actif' : 'Inactif'; ?></span>
