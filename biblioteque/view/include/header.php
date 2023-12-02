@@ -28,7 +28,7 @@ $page = basename($path);
 $separator = DIRECTORY_SEPARATOR;
 
 switch ($page) {
-    case "index.php":
+    case "home.php":
     case "connection.php":
     case "inscription.php":
         include "header_offLine.php";

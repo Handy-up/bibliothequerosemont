@@ -57,7 +57,7 @@ if (isset($_POST["send_params"])) {
 }
 
 //log-out currentUser_id
-$redirect_url_index = "/PHP/biblioteque/view/index.php";
+$redirect_url_index = "/PHP/biblioteque/view/home.php";
 if (isset($_POST['log-out'])) {
     echo "Yes";
     unset($_SESSION['currentUser']);

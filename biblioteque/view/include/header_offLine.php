@@ -1,5 +1,5 @@
 <div class="container-fluid head">
-    <a href="index.php" class="logo_red">
+    <a href="home.php" class="logo_red">
         <img src="image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
     </a>
     <div class="menu_connect">
