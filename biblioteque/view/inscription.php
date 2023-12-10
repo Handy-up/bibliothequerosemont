@@ -1,28 +1,32 @@
 <!--Pierre Handy page de connexion Je travaile sur cette page-->
+<?php if(!ISSET($controleur)) header("Location: ..\index.php");?>
 <?php
-require("include/header.php");
+include_once ("include/header.php");
+echo "<br>";
+if (isset($controleur->getMessagesErreur()[2])){
+    alert("Bienvenu ! ",$controleur->getMessagesErreur()[2]);
+}
 ?>
 
 <div class="container-fluid main_form">
     <div class="form_container">
         <h1>Se connecter</h1>
         <br>
-        <form method="POST" action="../Controler/ControllerInscription.php">
+        <form method="POST" action="?action=inscription">
             <div class="mb-3">
                 <?php
-                // Récupération des données depuis l'URL
-                $encodedCle = isset($_GET['cle']) ? $_GET['cle'] : '';
-                // Décodage des données
-                $cle = base64_decode(urldecode($encodedCle));
+                if(count($controleur->getMessagesErreur()) != 0 ){
 
-                // Vérifier si les conditions d'erreur sont remplies
-                if ($cle == 1) {
-                    // Afficher un message d'erreur à côté du champ pour la clé
-                    echo '<span class="error-message text-danger">Clé d\'inscription incorrecte</span>';
-                }else{
-                    echo '<span class="text-white">Clé d\'inscription</span>';
+                    $cle = $controleur->getMessagesErreur()[0];
+
+                    // Vérifier si les conditions d'erreur sont remplies
+                    if ($cle == 1) {
+                        // Afficher un message d'erreur à côté du champ pour la clé
+                        echo '<span class="error-message text-danger">Clé d\'inscription incorrecte</span>';
+                    }else{
+                        echo '<span class="text-white">Clé d\'inscription</span>';
+                    }
                 }
-
                 ?>
 
                 <input type="password" class="form-control" id="cle_inscription" name="cle_inscription" placeholder="PH22098" required>
@@ -46,14 +50,15 @@ require("include/header.php");
 
                 <?php
                 // Récupération des données depuis l'URL
-                $encodedPas = isset($_GET['pass']) ? $_GET['pass'] : '';
-                // Décodage des données
-                $pas = base64_decode(urldecode($encodedPas));
+                if(count($controleur->getMessagesErreur()) != 0 ){
+                    // Décodage des données
+                    $pas = $controleur->getMessagesErreur()[1];
 
-                // Vérifier si la condition d'erreur est remplie
-                if ($pas == 1) {
-                    // Afficher un message d'erreur à côté du champ
-                    echo '<span class="error-message text-danger">Les mots de passe ne correspondent pas</span>';
+                    // Vérifier si la condition d'erreur est remplie
+                    if ($pas == 1) {
+                        // Afficher un message d'erreur à côté du champ
+                        echo '<span class="error-message text-danger">Les mots de passe ne correspondent pas</span>';
+                    }
                 }
                 ?>
             </div>
@@ -63,7 +68,7 @@ require("include/header.php");
                 Demander une clé d'inscription?
             </a>
 
-            <button type="submit" class="btn btn-primary float-end" name="inscription">Se connecter</button>
+            <button type="submit" class="btn btn-primary float-end" name="inscription">S'incrire</button>
         </form>
 <!--        Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

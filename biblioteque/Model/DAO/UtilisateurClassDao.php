@@ -157,6 +157,28 @@ class UtilisateurClassDao implements DaoUser
 
     }
 
+    static public function valideKey($key)
+    {
+        $result = null;
+        try {
+            $con = ConnexionBD::getInstanceT();
+        }catch (Exception $e){
+            throw new Exception("Connexion Impossible ".$e);
+        }
+//        Recupéré les utilisateurs
+        $users = [];
+        $querry = $con->prepare("select * from bibliotheque_departemental.Cle where cle_inscription=?");
+        $querry->execute(array($key));
+        $data = $querry->fetch(PDO::FETCH_ASSOC);
+
+         if ($data){
+             $result = $data;
+         }
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
+        return $result;
+    }
+
 
 
     static public function delete($object)

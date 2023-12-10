@@ -2,7 +2,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a href="catalogue.php" class="logo_red">
-                    <img src="image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
+                    <img src="view/image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
                         </ul>
                         <div class="profile">
                             <span class="text-white">En ligne li i a 15 min  </span>
-                            <img src="image/default-avatar%20copie.jpg" class="rounded-circle" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?" width="54" height="55" alt="...">
+                            <img src="view/image/default-avatar%20copie.jpg" class="rounded-circle" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?" width="54" height="55" alt="...">
                         </div>
                     </div>
                 </div>

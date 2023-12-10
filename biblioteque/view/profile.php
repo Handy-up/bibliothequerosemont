@@ -1,13 +1,5 @@
 <?php
 require("include/header.php");
-include ("../Model/User.php");
-include_once ("../Model/DAO/UtilisateurClassDao.php");
-
-session_start();
-if (!isset($_SESSION['currentUser'])){
-    $redirect_url_connexion = "/PHP/biblioteque/view/connection.php";
-    header("Location: " . $redirect_url_connexion);
-}
 $user  = $_SESSION['currentUser'];
 $_SESSION['currentUser_id'] = $user->getId();
 ?>
