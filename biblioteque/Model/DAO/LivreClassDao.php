@@ -25,16 +25,17 @@ class LivreClassDao implements DaoBook
         $data = $querry->fetch();
         if ($data){
             $livre = new Livre(
+                $data['id_livre'],
                 $data['titre'],
                 $data['auteur'],
-                $data['edition'],
+                $data['evaluations'],
                 explode(',', $data['mots_cles']),  // Supposant que les mots-clés sont stockés sous forme de chaîne séparée par des virgules dans la base de données
                 $data['description'],
+                $data['url_cover'],
                 $data['evaluations'],
                 $data['proprietaire'],
                 $data['detenteur_actuel'],
                 $data['detenteur_precedent'],
-                $data['id_livre'],
                 $data['disponible']
             );
         }

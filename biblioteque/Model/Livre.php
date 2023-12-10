@@ -6,6 +6,7 @@ use User;
 
 class Livre
 {
+    private int $id_livre;
     private String $title;
     private String $author;
     private String $editor;
@@ -16,7 +17,6 @@ class Livre
     private int $host_id;
     private int $current_holder_id;
     private ?int $previous_holder_id;
-    private int $reference_code;
     private bool $status;
 
     /**
@@ -31,6 +31,7 @@ class Livre
      * @param int|null $previous_holder_id
      */
     public function __construct(
+        int $id_livre,
         string $title,
         string $author,
         string $editor,
@@ -43,6 +44,7 @@ class Livre
         ?int $previous_holder_id = null,
         bool   $status = true)
     {
+        $this->id_livre = $id_livre;
         $this->title = $title;
         $this->author = $author;
         $this->editor = $editor;
