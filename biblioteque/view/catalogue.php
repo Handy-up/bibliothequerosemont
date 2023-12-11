@@ -27,26 +27,25 @@ if (count($controleur->getMessagesErreur())!=0){
 </div>
 
 <div class="container w-100 h-auto">
-    <div class="container-fluid w-80 h-auto d-flex justify-content-center align-items-center card_list">
+    <div class="container-fluid w-80 h-auto card_list">
 <!--        Cardes-->
         <?php
         if ($controleur->getResult()){
             $livre = $controleur->getResult();
-
-            $host = $controleur->getUserInfo($livre->getHost());
-            $holder = $controleur->getUserInfo($livre->getCurrentHolder());
-            $lastHolder = $controleur->getUserInfo($livre->getPreviousHolder());
-//            echo $livre;
-//            echo "<br>";
-//            echo $host;
-//            echo "<br>";
-//            echo $holder;
-//            echo "<br>";
-//            echo $lastHolder;
-//            modal("Moi",$lastHolder,"Ok");
-            card($livre,$host,$holder,$lastHolder);
-//            var_dump($livre,$host,$holder,$lastHolder);
-//            card($controleur->getResult());
+            foreach ($livre as $data){
+                $host = $controleur->getUserInfo($data->getHost());
+                $holder = $controleur->getUserInfo($data->getCurrentHolder());
+                $lastHolder = $controleur->getUserInfo($data->getPreviousHolder());
+                card($data,$host,$holder,$lastHolder);
+//                echo $data;
+            }
+//            foreach ($livre as $reslut){
+//                $host = $controleur->getUserInfo($reslut->getHost());
+//                $holder = $controleur->getUserInfo($reslut->getCurrentHolder());
+//                $lastHolder = $controleur->getUserInfo($reslut->getPreviousHolder());
+//                card($reslut,$host,$holder,$lastHolder);
+//            }
+            echo "<br>";
         }
         ?>
 

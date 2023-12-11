@@ -30,10 +30,25 @@ class Catalogue extends Controller
     {
         if (isset($_POST["rechercher"])) {
             $mot_cle = $_POST['mot_cle'];
-            $livre = LivreClassDao::showFor($mot_cle);
-            if ($livre){
-                $this->listresult = $livre;
-            }else{
+            $result = null;
+            try {
+                $result = [
+                    LivreClassDao::filterBooks($mot_cle,null,null,null),
+                    LivreClassDao::filterBooks(null,$mot_cle,null,null),
+                    LivreClassDao::filterBooks(null,null,$mot_cle,null),
+                    LivreClassDao::filterBooks(null,null,null,$mot_cle)
+                ];
+            }catch (Exception $e){
+                echo $e;
+            }
+            $cmpt = 0;
+            foreach ($result as $livre){
+                if ($livre){
+                    $cmpt++;
+                    $this->listresult = $livre;
+                }
+            }
+            if ($cmpt==0){
                 $this->messagesErreur= ["Aucun résultat pour $mot_cle"];
             }
         }
