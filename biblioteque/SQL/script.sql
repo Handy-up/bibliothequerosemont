@@ -1,3 +1,4 @@
+# création de la table clé
 create table Cle
 (
     id_cle           int auto_increment
@@ -8,6 +9,7 @@ create table Cle
     constraint cle_inscription
         unique (cle_inscription)
 );
+# création de la table Utilisateur
 
 create table Utilisateur
 (
@@ -25,6 +27,7 @@ create table Utilisateur
     constraint cle_inscription
         unique (cle_inscription)
 );
+# création de la table Livre
 
 create table Livre
 (
@@ -48,6 +51,7 @@ create table Livre
         foreign key (detenteur_precedent) references Utilisateur (id_utilisateur)
 );
 
+# création de la table Demande
 create table Demande
 (
     id_demande       int auto_increment
@@ -88,11 +92,15 @@ create table Experience
         foreign key (livre_id) references Livre (id_livre)
 );
 
+# création de la des indexes Livre
+
 create index livre_id
     on Experience (livre_id);
 
 create index utilisateur_id
     on Experience (utilisateur_id);
+
+# création de la table Liste
 
 create table Liste
 (
@@ -121,6 +129,8 @@ create index detenteur_precedent
 create index proprietaire
     on Livre (proprietaire);
 
+# création de la table notification
+
 create table Notification
 (
     id_notification int auto_increment
@@ -132,40 +142,51 @@ create table Notification
         foreign key (destinataire) references Utilisateur (id_utilisateur)
 );
 
-create
-    definer = root@localhost procedure CreerDemandeEtNotifier(IN p_demandeur int, IN p_destinataire int, IN p_livre_id int)
+# création de la procedure stocker pour faire une demande de livre et notifier
+
+DELIMITER //
+
+CREATE DEFINER = root@localhost PROCEDURE CreerDemandeEtNotifier(IN p_demandeur INT, IN p_destinataire INT, IN p_livre_id INT)
 BEGIN
+    DECLARE nouvelle_demande_id INT;
+
     -- Insérer la nouvelle demande
     INSERT INTO Demande (date_demande, statut, detenteur_actuel, demandeur, livre_id)
-    VALUES (CURRENT_TIMESTAMP, 1, p_demandeur, p_destinataire, p_livre_id);
+    VALUES (NOW(), 1, p_demandeur, p_destinataire, p_livre_id);
 
     -- Récupérer l'ID de la nouvelle demande
-    SET @nouvelle_demande_id = LAST_INSERT_ID();
+    SET nouvelle_demande_id = LAST_INSERT_ID();
 
     -- Envoyer une notification au demandeur
     INSERT INTO Notification (contenu, destinataire)
     VALUES (CONCAT('Votre demande pour le livre ',
-                   (select titre from Livre where id_livre = p_livre_id)
+                   (SELECT titre FROM Livre WHERE id_livre = p_livre_id)
                 , ' a été envoyée.'), p_demandeur);
 
     -- Envoyer une notification à la personne adressée par la demande
     INSERT INTO Notification (contenu, destinataire)
     VALUES (CONCAT('Vous avez reçu une nouvelle demande de la part de ',
-                   (select prenom from Utilisateur where id_utilisateur = p_destinataire),
-            ' pour le livre ',(select titre from Livre where id_livre = p_livre_id) )
+                   (SELECT prenom FROM Utilisateur WHERE id_utilisateur = p_destinataire),
+                   ' pour le livre ', (SELECT titre FROM Livre WHERE id_livre = p_livre_id) )
            , p_destinataire);
 
     -- Envoyer une notification à l'administrateur (remplacez "id_administrateur" par l'ID réel de votre administrateur)
     INSERT INTO Notification (contenu, destinataire)
     VALUES (
-            CONCAT('Une nouvelle demande pour le livre ', (select titre from Livre where id_livre = p_livre_id),
-                   ' de la part de ',(select prenom from Utilisateur where id_utilisateur = p_demandeur),
-                ' a ',(select prenom from Utilisateur where id_utilisateur = p_destinataire),' a été créée.'), 0);
+               CONCAT('Une nouvelle demande pour le livre ', (SELECT titre FROM Livre WHERE id_livre = p_livre_id),
+                      ' de la part de ', (SELECT prenom FROM Utilisateur WHERE id_utilisateur = p_demandeur),
+                      ' a ', (SELECT prenom FROM Utilisateur WHERE id_utilisateur = p_destinataire),' a été créée.'), 0);
 END;
+//
 
-create
-    definer = root@localhost procedure InsererNouvelUtilisateur(IN p_cle_inscription varchar(55), IN p_nom varchar(25),
-                                                                IN p_prenom varchar(25), IN p_mot_de_passe varchar(55))
+DELIMITER ;
+
+# création de la procedure stocker pour un nouvelle utilisateur
+
+DELIMITER //
+
+CREATE DEFINER = root@localhost PROCEDURE InsererNouvelUtilisateur(IN p_cle_inscription VARCHAR(55), IN p_nom VARCHAR(25),
+                                                                   IN p_prenom VARCHAR(25), IN p_mot_de_passe VARCHAR(55))
 BEGIN
     DECLARE v_code_partage VARCHAR(30);
 
@@ -176,23 +197,37 @@ BEGIN
 
         -- Insérer le nouvel utilisateur dans la table Utilisateur
         INSERT INTO Utilisateur (nom, prenom, mot_de_passe, code_de_partage, cle_inscription, date_inscription, statut, fonction)
-        VALUES (p_nom, p_prenom, MD5(p_mot_de_passe), v_code_partage, p_cle_inscription, NOW(), 1, 'user'); -- MD5 est utilisé pour stocker un mot de passe haché, vous pouvez ajuster selon vos besoins
+        VALUES (p_nom, p_prenom, p_mot_de_passe, v_code_partage, p_cle_inscription, NOW(), 1, 'user'); -- MD5 est utilisé pour stocker un mot de passe haché, vous pouvez ajuster selon vos besoins
     ELSE
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'La clé d''inscription n''existe pas dans la table Cle.';
+            SET MESSAGE_TEXT = 'La clé d''inscription n''existe pas dans la table Cle.';
     END IF;
 END;
+//
 
+DELIMITER ;
+
+
+#creation de déclancheur pour suprimer tout les demandes qui ont été accepter ou refuser
+
+DELIMITER //
 create
     definer = root@localhost procedure SupprimerDemandesStatutZero()
 BEGIN
     DELETE FROM Demande WHERE statut = 0;
 END;
+//
+DELIMITER ;
 
+#creation de déclancheur pour suprimer tout les demandes qui ont été accepter ou refuser version tout les 5 secondes
+
+DELIMITER //
 create definer = root@localhost event EventSupprimerDemandesStatutZero on schedule
     every '5' SECOND
         starts '2023-11-11 20:58:49'
     enable
     do
     CALL SupprimerDemandesStatutZero();
+//
+DELIMITER ;
 

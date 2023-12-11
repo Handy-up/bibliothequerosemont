@@ -31,7 +31,7 @@ class User
         string $shareCode,
         string $registrationKey,
         string $registrationDate = null,
-        bool $status = true,
+        bool $status,
         string $fonction)
     {
         $this->id =$id_user;
