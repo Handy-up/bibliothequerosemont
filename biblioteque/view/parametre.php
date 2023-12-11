@@ -1,15 +1,6 @@
-<?php
+<?php if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
 
-
-include ("../Model/User.php");
-include_once ("../Model/DAO/UtilisateurClassDao.php");
-// Récupération de la saision
-session_start();
-if (!isset($_SESSION['currentUser'])){
-    $redirect_url_connexion = "/PHP/biblioteque/view/connection.php";
-    header("Location: " . $redirect_url_connexion);
-}
 $user  = $_SESSION['currentUser'];
 $_SESSION['currentUser_id'] = $user->getId();
 ?>
@@ -18,7 +9,7 @@ $_SESSION['currentUser_id'] = $user->getId();
     <hr class="my-4 thicker-separator">
 
     <div class="forme_params">
-        <form method="post" action="../Controler/CotrollerParamètres.php">
+        <form method="post" action="?action=parametre">
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom</label>
                 <input type="text" class="form-control" aria-describedby="basic-addon1" value="<?php echo $user->getLastName(); ?>" name="nom">
@@ -53,8 +44,8 @@ $_SESSION['currentUser_id'] = $user->getId();
     <div class="col-12 d-flex justify-content-end w-auto">
         <button type="button" class="btn btn-outline-primary">Suspendre mon compte</button>
         <label style="margin: 5px">|</label>
-        <form method="post" action="../Controler/CotrollerParamètres.php">
-            <button type="submit" class="btn btn-outline-danger" name="log-out">Deconnection</button>
+        <form method="post" action="?action=parametre">
+            <button type="submit" class="btn btn-outline-danger" name="out">Deconnection</button>
         </form>
     </div>
     <br>

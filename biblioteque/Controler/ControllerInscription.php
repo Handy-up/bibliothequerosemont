@@ -1,8 +1,7 @@
 <?php
 
 
-Class Inscription extends Controller
-{
+Class Inscription extends Controller{
     public function __construct()
     {
         parent::__construct();

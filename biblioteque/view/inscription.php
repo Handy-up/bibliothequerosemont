@@ -79,7 +79,7 @@ if (isset($controleur->getMessagesErreur()[2])){
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="../Controler/ControllerIndex.php">
+                        <form method="POST" action="?action=inscription">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label text-dark">Courriel</label>
                                 <input type="email" class="form-control border-black" id="recipient-name" name="demande_mail">

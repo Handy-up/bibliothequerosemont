@@ -33,9 +33,9 @@ class Catalogue extends Controller
             $result = null;
             try {
                 $result = [
-                    LivreClassDao::filterBooks($mot_cle,null,null,null),
-                    LivreClassDao::filterBooks(null,$mot_cle,null,null),
-                    LivreClassDao::filterBooks(null,null,$mot_cle,null),
+                    LivreClassDao::filterBooks($mot_cle),
+                    LivreClassDao::filterBooks(null,$mot_cle),
+                    LivreClassDao::filterBooks(null,null,$mot_cle),
                     LivreClassDao::filterBooks(null,null,null,$mot_cle)
                 ];
             }catch (Exception $e){

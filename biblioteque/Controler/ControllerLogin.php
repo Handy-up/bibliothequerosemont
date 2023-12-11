@@ -1,7 +1,6 @@
 <?php
 include_once "Controller.abstract.php";
 
-
 Class Login extends Controller {
     public function __construct() {
         parent::__construct();
