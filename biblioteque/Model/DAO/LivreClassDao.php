@@ -18,24 +18,27 @@ class LivreClassDao implements DaoBook
         } catch (Exception $e) {
             throw new Exception("Connexion Impossible " . $e);
         }
+        $livre = null;
 
         $querry = $con->prepare("SELECT * FROM bibliotheque_departemental.Livre WHERE id_livre = ?");
         $querry->execute(array($keyWord));
         $data = $querry->fetch();
-
-        $livre = new Livre(
-            $data['titre'],
-            $data['auteur'],
-            $data['edition'],
-            explode(',', $data['mots_cles']),  // Supposant que les mots-clés sont stockés sous forme de chaîne séparée par des virgules dans la base de données
-            $data['description'],
-            $data['evaluations'],
-            $data['proprietaire'],
-            $data['detenteur_actuel'],
-            $data['detenteur_precedent'],
-            $data['id_livre'],
-            $data['disponible']
-        );
+        if ($data){
+            $livre = new Livre(
+                $data['id_livre'],
+                $data['titre'],
+                $data['auteur'],
+                $data['evaluations'],
+                explode(',', $data['mots_cles']),  // Supposant que les mots-clés sont stockés sous forme de chaîne séparée par des virgules dans la base de données
+                $data['description'],
+                $data['url_cover'],
+                $data['evaluations'],
+                $data['proprietaire'],
+                $data['detenteur_actuel'],
+                $data['detenteur_precedent'],
+                $data['disponible']
+            );
+        }
 
         $querry->closeCursor();
         ConnexionBD::fermerConnexion();
@@ -62,6 +65,7 @@ class LivreClassDao implements DaoBook
         }
 
         $query = $con->prepare("INSERT INTO bibliotheque_departemental.Livre (titre, auteur, edition, mots_cles, description, evaluations, disponible, proprietaire, detenteur_actuel, detenteur_precedent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
 
         $query->execute([
             $book->getTitle(),
@@ -102,7 +106,7 @@ class LivreClassDao implements DaoBook
             throw new Exception("Connexion Impossible " . $e);
         }
 
-        $query = "SELECT * FROM bibliotheque_departemental.Livre WHERE ? "; // enlerver ?
+        $query = "SELECT * FROM bibliotheque_departemental.Livre WHERE "; // enlerver ?
         $params = [];
 
         if ($title !== null) {
@@ -136,16 +140,17 @@ class LivreClassDao implements DaoBook
 
         foreach ($data as $row) {
             $book = new Livre(
+                $row['id_livre'],
                 $row['titre'],
                 $row['auteur'],
-                $row['edition'],
-                explode(',', $row['mots_cles']),
+                $row['evaluations'],
+                explode(',', $row['mots_cles']),  // Supposant que les mots-clés sont stockés sous forme de chaîne séparée par des virgules dans la base de données
                 $row['description'],
+                $row['url_cover'],
                 $row['evaluations'],
                 $row['proprietaire'],
                 $row['detenteur_actuel'],
                 $row['detenteur_precedent'],
-                $row['id_livre'],
                 $row['disponible']
             );
 

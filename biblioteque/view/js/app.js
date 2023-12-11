@@ -33,6 +33,15 @@ const popover = new bootstrap.Popover('.example-popover', {
     container: 'body'
 })
 
+const myPopoverTrigger = document.getElementById('myPopover')
+myPopoverTrigger.addEventListener('hidden.bs.popover', () => {
+    alert("yo")
+    // do something...
+})
+
+const alert = bootstrap.Alert.getOrCreateInstance('#myAlert')
+alert.close()
+
 
 // Dash
 
