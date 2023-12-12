@@ -24,8 +24,10 @@ Class Login extends Controller {
                 return "connection";
             } else {
                 $this->messagesErreur[0] = 0;
-//                session_start();
                 $_SESSION['currentUser'] = $user[0];
+                if ($user[0]->getFonction() == "admin"){
+                    return "admin";
+                }
                 return "profile";
             }
         }

@@ -77,11 +77,15 @@ class Liste {
         }
         echo "Livre non trouvé dans la liste.";
     }
-    
-    
 
 
-
-
+    public function __toString(): string
+    {
+        $affichage = "";
+        foreach ($this->livres as $livre) {
+            $affichage .= $livre . " <br>";
+        }
+        return $affichage;
+    }
 }
 ?>

@@ -11,6 +11,7 @@ include_once "Controler/ControllerNotification.php";
 include_once "Controler/ControllerProfile.php";
 include_once "Model/DAO/UtilisateurClassDao.php";
 include_once "Model/DAO/LivreClassDao.php";
+include_once "Model/DAO/ListeClasseDao.php";
 include_once "Model/User.php";
 include_once "Model/Livre.php";
 include_once "Model/Departement.php";
@@ -37,7 +38,7 @@ showHeader($nomVue);
 $allert = 0;
 
 // inclure la bonne vue
-echo "[Page "."view/".$nomVue.".php]";
+//echo "[Page "."view/".$nomVue.".php]";
 //echo "Page :".$nomVue;
 include_once("view/".$nomVue.".php");
 ?>

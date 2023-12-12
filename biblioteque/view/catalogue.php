@@ -37,14 +37,7 @@ if (count($controleur->getMessagesErreur())!=0){
                 $holder = $controleur->getUserInfo($data->getCurrentHolder());
                 $lastHolder = $controleur->getUserInfo($data->getPreviousHolder());
                 card($data,$host,$holder,$lastHolder);
-//                echo $data;
             }
-//            foreach ($livre as $reslut){
-//                $host = $controleur->getUserInfo($reslut->getHost());
-//                $holder = $controleur->getUserInfo($reslut->getCurrentHolder());
-//                $lastHolder = $controleur->getUserInfo($reslut->getPreviousHolder());
-//                card($reslut,$host,$holder,$lastHolder);
-//            }
             echo "<br>";
         }
         ?>
