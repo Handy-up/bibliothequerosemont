@@ -1,9 +1,8 @@
 
-
-<nav class="navbar bg-dark border-bottom border-body d-flex h-50" data-bs-theme="dark">
+<nav class="navbar bg-dark border-bottom border-body d-flex nav-admin" data-bs-theme="dark">
     <!-- Navbar content -->
-        <a href="index.php" class="logo_red p-3">
-            <img src="image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
+        <a href="?action=admin" class="logo_red p-3">
+            <img src="view/image/rosemont_red_logo.png" alt="Logo collège de Rosemont">
         </a>
         <div class="menu_connect">
             <div class="d-flex">
@@ -17,5 +16,4 @@
                 </div>
             </div>
         </div>
-
 </nav>

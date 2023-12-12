@@ -12,7 +12,7 @@ $_SESSION['currentUser_id'] = $user->getId();
         <form method="post" action="?action=parametre">
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom</label>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" value="<?php echo $user->getLastName(); ?>" name="nom">
+                <input type="text" class="form-control " aria-describedby="basic-addon1" value="<?php echo $user->getLastName(); ?>" name="nom">
             </div>
 
             <div class="mb-3">

@@ -1,258 +1,141 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/bootstrap.min.css">
-    <title>Bibliothèque</title>
-</head>
-<body>
+<?php
+if (!isset($controleur)) header("Location: ..\index.php");
+require("include/header.php");
+$page = "stat";
+if (isset($_GET['page'])){
+    $page = $_GET['page'];
+}
 
-<!-- for header part -->
-<header>
-
-    <div class="logosec">
-        <div class="logo">GeeksForGeeks</div>
-
-    </div>
-
-    <div class="searchbar">
-        <input type="text"
-               placeholder="Search">
-        <div class="searchbtn">
-            <img src=
-                 "https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                 class="icn srchicn"
-                 alt="search-icon">
-        </div>
-    </div>
-
-    <div class="message">
-        <div class="circle"></div>
-        <img src=
-             "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/8.png"
-             class="icn"
-             alt="">
-        <div class="dp">
-            <img src=
-                 "https://media.geeksforgeeks.org/wp-content/uploads/20221210180014/profile-removebg-preview.png"
-                 class="dpicn"
-                 alt="dp">
-        </div>
-    </div>
-
-</header>
+?>
 
 <div class="main-container">
+
     <div class="navcontainer">
-        <nav class="nav">
-            <div class="nav-upper-options">
-                <div class="nav-option option1">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210182148/Untitled-design-(29).png"
-                         class="nav-img"
-                         alt="dashboard">
-                    <h3> Dashboard</h3>
-                </div>
-
-                <div class="option2 nav-option">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183322/9.png"
-                         class="nav-img"
-                         alt="articles">
-                    <h3> Articles</h3>
-                </div>
-
-                <div class="nav-option option3">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/5.png"
-                         class="nav-img"
-                         alt="report">
-                    <h3> Report</h3>
-                </div>
-
-                <div class="nav-option option4">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/6.png"
-                         class="nav-img"
-                         alt="institution">
-                    <h3> Institution</h3>
-                </div>
-
-                <div class="nav-option option5">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183323/10.png"
-                         class="nav-img"
-                         alt="blog">
-                    <h3> Profile</h3>
-                </div>
-
-                <div class="nav-option option6">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183320/4.png"
-                         class="nav-img"
-                         alt="settings">
-                    <h3> Settings</h3>
-                </div>
-
-                <div class="nav-option logout">
-                    <img src=
-                         "https://media.geeksforgeeks.org/wp-content/uploads/20221210183321/7.png"
-                         class="nav-img"
-                         alt="logout">
-                    <h3>Logout</h3>
-                </div>
-
-            </div>
-        </nav>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="?action=admin&page=stat">Tableau de bord</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=utilisateur">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=notification_admin">Notifications</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=out" >Quitter</a>
+            </li>
+        </ul>
     </div>
-    <div class="main">
 
-        <div class="searchbar2">
-            <input type="text"
-                   name=""
-                   id=""
-                   placeholder="Search">
-            <div class="searchbtn">
-                <img src=
-                     "https://media.geeksforgeeks.org/wp-content/uploads/20221210180758/Untitled-design-(28).png"
-                     class="icn srchicn"
-                     alt="search-button">
-            </div>
-        </div>
+
+
+<!--    Main-->
+    <div class="main">
 
         <div class="box-container">
 
-            <div class="box box1">
-                <div class="text">
-                    <h2 class="topic-heading">60.5k</h2>
-                    <h2 class="topic">Article Views</h2>
+                <div class="card text-bg-dark mb-3 box" style="max-width: 18rem;">
+                    <div class="card-header">Utilisateurs</div>
+                    <div class="card-body">
+                        <h6 class="d-flex justify-content-end"><?php
+                            date_default_timezone_set('UTC');
+                            echo date("M-Y");
+                            ?></h6>
+                        <h5 class="card-title">Nombre d'utilisateurs</h5>
+                        <h2 class="card-text "> <?php if (isset($controleur))echo count($controleur->getUsers()); ?></h2>
+                    </div>
                 </div>
 
-                <img src=
-                     "https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(31).png"
-                     alt="Views">
+            <div class="card text-bg-primary mb-3 box" style="max-width: 18rem;">
+                <div class="card-header">Ouvrages</div>
+                <div class="card-body">
+                    <h6 class="d-flex justify-content-end"><?php
+                        date_default_timezone_set('UTC');
+                        echo date("M-Y");
+                        ?></h6>
+                    <h5 class="card-title">Livres du système</h5>
+                    <h2 class="card-text "> <?php if (isset($controleur))echo count($controleur->getLivres()); ?></h2>
+                </div>
             </div>
 
-            <div class="box box2">
-                <div class="text">
-                    <h2 class="topic-heading">150</h2>
-                    <h2 class="topic">Likes</h2>
+            <div class="card text-bg-success mb-3 box" style="max-width: 18rem;">
+                <div class="card-header">Clé</div>
+                <div class="card-body">
+                    <h6 class="d-flex justify-content-end"><?php
+                        date_default_timezone_set('UTC');
+                        echo date("M-Y");
+                        ?></h6>
+                    <h5 class="card-title">Demandes de clé </h5>
+                    <h2 class="card-text "> <?php if (isset($controleur))echo 12 ?></h2>
                 </div>
-
-                <img src=
-                     "https://media.geeksforgeeks.org/wp-content/uploads/20221210185030/14.png"
-                     alt="likes">
             </div>
 
-            <div class="box box3">
-                <div class="text">
-                    <h2 class="topic-heading">320</h2>
-                    <h2 class="topic">Comments</h2>
+            <div class="card text-bg-warning mb-3 box" style="max-width: 18rem;">
+                <div class="card-header">Comptes</div>
+                <div class="card-body">
+
+                    <div>
+                        <span class="card-title">Utilisateurs actif</span>
+                        <span class="card-text"> <strong><h4>12</h4></strong> </span>
+                    </div>
+                    <div>
+                        <span class="card-title">Ouvrages disponible</span>
+                        <span class="card-text"> <strong><h4>52</h4></strong> </span>
+                    </div>
                 </div>
-
-                <img src=
-                     "https://media.geeksforgeeks.org/wp-content/uploads/20221210184645/Untitled-design-(32).png"
-                     alt="comments">
-            </div>
-
-            <div class="box box4">
-                <div class="text">
-                    <h2 class="topic-heading">70</h2>
-                    <h2 class="topic">Published</h2>
-                </div>
-
-                <img src=
-                     "https://media.geeksforgeeks.org/wp-content/uploads/20221210185029/13.png" alt="published">
             </div>
         </div>
 
         <div class="report-container">
-            <div class="report-header">
-                <h1 class="recent-Articles">Recent Articles</h1>
-                <button class="view">View All</button>
-            </div>
-
-            <div class="report-body">
-                <div class="report-topic-heading">
-                    <h3 class="t-op">Article</h3>
-                    <h3 class="t-op">Views</h3>
-                    <h3 class="t-op">Comments</h3>
-                    <h3 class="t-op">Status</h3>
-                </div>
-
-                <div class="items">
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 73</h3>
-                        <h3 class="t-op-nextlvl">2.9k</h3>
-                        <h3 class="t-op-nextlvl">210</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 72</h3>
-                        <h3 class="t-op-nextlvl">1.5k</h3>
-                        <h3 class="t-op-nextlvl">360</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 71</h3>
-                        <h3 class="t-op-nextlvl">1.1k</h3>
-                        <h3 class="t-op-nextlvl">150</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 70</h3>
-                        <h3 class="t-op-nextlvl">1.2k</h3>
-                        <h3 class="t-op-nextlvl">420</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 69</h3>
-                        <h3 class="t-op-nextlvl">2.6k</h3>
-                        <h3 class="t-op-nextlvl">190</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 68</h3>
-                        <h3 class="t-op-nextlvl">1.9k</h3>
-                        <h3 class="t-op-nextlvl">390</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 67</h3>
-                        <h3 class="t-op-nextlvl">1.2k</h3>
-                        <h3 class="t-op-nextlvl">580</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 66</h3>
-                        <h3 class="t-op-nextlvl">3.6k</h3>
-                        <h3 class="t-op-nextlvl">160</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                    <div class="item1">
-                        <h3 class="t-op-nextlvl">Article 65</h3>
-                        <h3 class="t-op-nextlvl">1.3k</h3>
-                        <h3 class="t-op-nextlvl">220</h3>
-                        <h3 class="t-op-nextlvl label-tag">Published</h3>
-                    </div>
-
-                </div>
-            </div>
+            <?php
+            echo "Page : $page";
+            include_once "view/include/".$page.".php";
+            ?>
         </div>
+<!--        end of main-->
     </div>
 </div>
 
-</body>
-</html>
+<?php
+$dataPoints = array(
+    array("y" => 12, "label" => "Janvier" ),
+    array("y" => 5, "label" => "Février" ),
+    array("y" => 5, "label" => "Mars" ),
+    array("y" => 3, "label" => "Avril" ),
+    array("y" => 34, "label" => "Mai" ),
+    array("y" => 34, "label" => "Juin" ),
+    array("y" => 63, "label" => "Juillet" ),
+    array("y" => 63, "label" => "Aout" ),
+    array("y" => 3, "label" => "Septembre" ),
+    array("y" => 3, "label" => "Novembre" ),
+    array("y" => 3, "label" => "Décembre" )
+);
+?>
+
+<!-- Srcipt -->
+<script>
+    window.onload = function() {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            title:{
+                text: "Échange enregistrer par mois"
+            },
+            axisY: {
+                title: ""
+            },
+            data: [{
+                type: "column",
+                yValueFormatString: "#,##0.## livres échangers",
+                dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+            }]
+        });
+        chart.render();
+    }
+</script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<?php
+include("include/footer.php");
+?>

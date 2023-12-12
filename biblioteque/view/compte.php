@@ -1,5 +1,15 @@
-<?php
+<?php if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
+include_once "fonctions/components.php";
+if (!isset($_SESSION['currentUser'])){
+    $redirect_url_connexion = "/PHP/biblioteque/index.php";
+    header("Location: " . $redirect_url_connexion);
+}
+
+$user  = $_SESSION['currentUser'];
+$user_id = $_SESSION['currentUser_id'];
+
+
 ?>
 <div class="container compte">
     <div class="d-flex justify-content-between w-50 tite_modal">
@@ -46,29 +56,26 @@ require("include/header.php");
     <hr class="my-4 thicker-separator">
 
     <div class="container w-100 h-auto">
-        <div class="container-fluid w-80 h-auto d-flex justify-content-center align-items-center card_list">
+        <div class="container-fluid w-80 h-auto card_list">
             <!--        Cardes-->
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-3 image">
-                        <img src="image/book_cover/CoverNotAvailable.jpg" class="img-fluid rounded-start" alt="Couverture">
-                    </div>
-                    <div class="col-md-9">
-                        <div class="card-body">
-                            <h5 class="card-title">Titre Livre</h5>
-                            <p class="card-text float-right"><small class="text-body-dark">Mots Clés : pomme boule jeaune</small></p>
-                            <p class="card-text">Description : This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago by Username</small></p>
-                        </div>
-                        <div class="d-flex justify-content-between action_card">
-                            <span>Nom Propriétaire</span>
-                            <form class="float-end">
-                                <button class="btn btn-dark" type="submit">Reserver</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+if (isset($controleur)) {
+    if ($controleur->getListe()) {
+        $livreLis = $controleur->getListe();
+        $livre = $livreLis->getLivres();
+        foreach ($livre as $data) {
+            $host = $controleur->getUserInfo($data->getHost());
+            $holder = $controleur->getUserInfo($data->getCurrentHolder());
+            $lastHolder = $controleur->getUserInfo($data->getPreviousHolder());
+            cardList($data, $host, $holder, $lastHolder);
+        }
+        echo "<br>";
+
+    }else{
+        echo "Liste Vide";
+    }
+}
+            ?>
         </div>
     </div>
 

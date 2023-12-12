@@ -9,7 +9,38 @@ class LivreClassDao implements DaoBook
 
     static public function showAll()
     {
-        // TODO: Implement showAll() method.
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+        $livres = null;
+
+        $querry = $con->prepare("SELECT * FROM bibliotheque_departemental.Livre");
+        $querry->execute();
+        $data = $querry->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($data as $enr){
+            $livre = new Livre(
+                $enr['id_livre'],
+                $enr['titre'],
+                $enr['auteur'],
+                $enr['evaluations'],
+                explode(',', $enr['mots_cles']),  // Supposant que les mots-clés sont stockés sous forme de chaîne séparée par des virgules dans la base de données
+                $enr['description'],
+                $enr['url_cover'],
+                $enr['evaluations'],
+                $enr['proprietaire'],
+                $enr['detenteur_actuel'],
+                $enr['detenteur_precedent'],
+                $enr['disponible']
+            );
+            $livres[] = $livre;
+        }
+
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
+
+        return $livres;
     }
 
     static public function showFor($keyWord) {
