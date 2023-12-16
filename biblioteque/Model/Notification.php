@@ -1,7 +1,7 @@
 <?php
 //Commencé par Lleyton
 class Notification {
-      private $dateEnvoi;
+    private $dateEnvoi;
     private $destinataire;
     private $contenu;
     private $consultation;

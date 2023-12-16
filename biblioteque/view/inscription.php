@@ -82,7 +82,7 @@ if (isset($controleur->getMessagesErreur()[2])){
                         <form method="POST" action="?action=inscription">
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label text-dark">Courriel</label>
-                                <input type="email" class="form-control border-black" id="recipient-name" name="demande_mail">
+                                <input type="email" class="form-control border-black" id="recipient-name" name="demande_mail" required>
                             </div>
                     </div>
                     <div class="modal-footer">

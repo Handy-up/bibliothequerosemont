@@ -21,7 +21,7 @@
                         </ul>
                         <div class="profile">
                             <span class="text-white">En ligne li i a 15 min  </span>
-                            <img src="view/image/default-avatar%20copie.jpg" class="rounded-circle" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?" width="54" height="55" alt="...">
+                            <img src="view/image/defaultProfil.jpg" class="rounded-circle" tabindex="0" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-title="Dismissible popover" data-bs-content="And here's some amazing content. It's very engaging. Right?" width="54" height="55" alt="...">
                         </div>
                     </div>
                 </div>

@@ -54,6 +54,12 @@ Class Inscription extends Controller{
             return "inscription";
         }
 
+        if (isset($_POST['demande_de_cle'])){
+            UtilisateurClassDao::demadeCle($_POST['demande_mail']);
+            return "inscription";
+
+        }
+
         return "inscription";
     }
 

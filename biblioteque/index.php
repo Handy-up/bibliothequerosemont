@@ -17,6 +17,7 @@ include_once "Model/Livre.php";
 include_once "Model/Departement.php";
 include_once "Model/Experience.php";
 include_once "Model/Liste.php";
+include_once "Model/Demande.php";
 include_once "Model/Notification.php";
 include_once "view/fonctions/message.php";
 //Obtenir le bon controleur
@@ -25,7 +26,6 @@ if (!ISSET($_GET['action'])) {
 } else {
     $action = $_GET['action'];
 }
-
 
 $controleur = MainController::creerControleur($action);
 

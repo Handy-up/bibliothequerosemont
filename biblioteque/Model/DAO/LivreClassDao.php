@@ -95,20 +95,21 @@ class LivreClassDao implements DaoBook
             throw new Exception("Connexion Impossible " . $e);
         }
 
-        $query = $con->prepare("INSERT INTO bibliotheque_departemental.Livre (titre, auteur, edition, mots_cles, description, evaluations, disponible, proprietaire, detenteur_actuel, detenteur_precedent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = $con->prepare("INSERT INTO bibliotheque_departemental.Livre (id_livre,titre, auteur, edition, mots_cles, description, evaluations, proprietaire, detenteur_actuel, detenteur_precedent,disponible) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 
         $query->execute([
+            $book->getIdLivre(),
             $book->getTitle(),
             $book->getAuthor(),
             $book->getEditor(),
             implode(',', $book->getKeyWords()),
             $book->getDescription(),
             $book->getEvaluation(),
-            $book->isStatus(),
-            $book->getHost()->getId(),  // Supposant que getId() retourne l'ID de l'utilisateur
-            $book->getCurrentHolder()->getId(),
-            $book->getPreviousHolder() ? $book->getPreviousHolder()->getId() : null,
+            $book->getHostId(),
+            $book->getCurrentHolderId(),
+            $book->getPreviousHolderId(),
+            0
         ]);
 
         $query->closeCursor();
@@ -193,5 +194,25 @@ class LivreClassDao implements DaoBook
 
         return $books;
     }
+
+    static public function creerDemandeEtNotifier($demandeur, $destinataire, $livreId)
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("CALL CreerDemandeEtNotifier(:p_demandeur, :p_destinataire, :p_livre_id)");
+        $query->bindParam(':p_demandeur', $demandeur, PDO::PARAM_INT);
+        $query->bindParam(':p_destinataire', $destinataire, PDO::PARAM_INT);
+        $query->bindParam(':p_livre_id', $livreId, PDO::PARAM_INT);
+        $query->execute();
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+    }
+
+
 
 }

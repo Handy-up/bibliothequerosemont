@@ -26,6 +26,7 @@ Class Login extends Controller {
                 $this->messagesErreur[0] = 0;
                 $_SESSION['currentUser'] = $user[0];
                 if ($user[0]->getFonction() == "admin"){
+                    header('Location: index.php?action=admin&page=stat');
                     return "admin";
                 }
                 return "profile";
