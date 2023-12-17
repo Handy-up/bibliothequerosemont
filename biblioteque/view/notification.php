@@ -1,4 +1,5 @@
 <?php
+if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
 include_once "fonctions/components.php";
 ?>
@@ -26,7 +27,7 @@ $listeDemandes = array(
     new Demande(3, 103, 203, 0, "2023-01-03 10:45:00")
 );
 
-afficherNotificationsModals($listeDemandes);
+afficherNotificationsModals((array)$controleur->getDemandes());
 
 afficherNotifications($notifications);
 

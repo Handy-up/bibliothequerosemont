@@ -12,6 +12,7 @@ include_once "Controler/ControllerProfile.php";
 include_once "Model/DAO/UtilisateurClassDao.php";
 include_once "Model/DAO/LivreClassDao.php";
 include_once "Model/DAO/ListeClasseDao.php";
+include_once "Model/DAO/DemandeClassDao.php";
 include_once "Model/User.php";
 include_once "Model/Livre.php";
 include_once "Model/Departement.php";

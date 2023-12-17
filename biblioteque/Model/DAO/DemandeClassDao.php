@@ -1,65 +1,101 @@
 <?php
-//Lleyton
-class DemandeClasseDAO {
-    
-    // Méthode pour ajouter une nouvelle demande  dans la base de données
-    public function ajouterDemande($id_demande,$statut,$detenteur_actuel, $demendeur,$livre_id) {
-       $con= ConnexionBD::getInstanceT();
-        $sql = "INSERT INTO Demande (id_demande, date_demande, statut, detenteur_actuel, demandeur, livre_id) VALUES (:id_demande,NOW(),:statu, :detenteur_actuel, :demandeur:livre_id)";
-        $stmt = $con->prepare($sql);
-        $stmt->bindParam(':id_demande', $id_demande, PDO::PARAM_STR);
-        $stmt->bindParam(':statut', $statut, PDO::PARAM_INT);
-        $stmt->bindParam(':livre_id', $livre_id, PDO::PARAM_INT);
-        $stmt->bindParam(':detenteur_actuel', $detenteur_actuel, PDO::PARAM_INT);
-        $stmt->bindParam(':demandeur', $demendeur, PDO::PARAM_INT);
-        
-        
-        
-        return $stmt->execute();
+include_once ("DAODemande.php");
+
+class DemandeClassDao implements DAODemande
+{
+
+    static public function showAllRequest(): array
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Demande");
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $requests = array();
+        foreach ($data as $row) {
+            $demande = new Demande(
+                $row['id_demande'],
+                $row['detenteur_actuel'],
+                $row['demandeur'],
+                $row['statut'],
+                $row['date_demande']
+            );
+            $requests[] = $demande;
+        }
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+
+        return $requests;
     }
 
-    // Méthode pour récupérer toutes les demandes de la base de données
-    public function getDemande() {
-        $con= ConnexionBD::getInstanceT();
-        $sql = "SELECT * FROM Demande ORDER BY statut DESC";
-        $stmt = $con->query($sql);
+    static public function showForDemande($id_detanteur): array
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Demande WHERE detenteur_actuel = ?");
+        $query->execute([$id_detanteur]);
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $demandes = array();
+        foreach ($data as $row) {
+            $demande = new Demande(
+                $row['id_demande'],
+                $row['demandeur'],
+                $row['detenteur_actuel'],
+                $row['statut'],
+                $row['date_demande']
+            );
+            $demandes[] = $demande;
+        }
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+
+        return $demandes;
     }
-   
-    // Méthode pour mettre à jour une demande dans la base de données
-    public function updateDemande($id_demande, $statut, $detenteur_actuel) {
-        $con= ConnexionBD::getInstanceT();
-        $sql = "UPDATE Demande SET statut = :statut, detenteur_actuel = :detenteur_actuel WHERE id_demande = :id_demande";
-        $stmt = $con->prepare($sql);
-        $stmt->bindParam(':statut', $statut, PDO::PARAM_INT);
-        $stmt->bindParam(':detenteur_actuel', $detenteur_actuel, PDO::PARAM_INT);
-        $stmt->bindParam(':id_demande', $id_demande, PDO::PARAM_INT);
 
-        return $stmt->execute();
+    static public function showIfDemande($conditions)
+    {
+        // TODO: Implement showIfDemande() method.
     }
 
-    // Méthode pour supprimer une demande de la base de données par ID
-    public function deleteDemande($id_demande) {
-        $con= ConnexionBD::getInstanceT();
-        $sql = "DELETE FROM Demande WHERE id_demande = :id_demande";
-        $stmt = $con->prepare($sql);
-        $stmt->bindParam(':id_demande', $id_demande, PDO::PARAM_INT);
+    static public function updateDemande($id_demande): void
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
 
-        return $stmt->execute();
+        $query = $con->prepare("UPDATE bibliotheque_departemental.Demande SET statut = 1 WHERE id_demande = ?");
+        $query->execute([$id_demande]);
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
     }
 
-    // Méthode pour obtenir une demande par ID
-    public function getDemandeById($id_demande) {
-        $con= ConnexionBD::getInstanceT();
-        $sql = "SELECT * FROM Demande WHERE id_demande = :id_demande";
-        $stmt = $con->prepare($sql);
-        $stmt->bindParam(':id_demande', $id_demande, PDO::PARAM_INT);
-        $stmt->execute();
+    static public function deleteDemande($id_demande): void
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $query = $con->prepare("DELETE FROM bibliotheque_departemental.Demande WHERE id_demande = ?");
+        $query->execute([$id_demande]);
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
     }
-    
 }
-
-?>
