@@ -17,8 +17,10 @@
             Collège de Rosemont – Tous droits réservés
         </p>
     </footer>
+    <script src="view/js/javaScriptPart.js"></script>
+    <script src="view/js/app.js"></script>
     <script src="view/js/bootstrap.bundle.min.js"></script>
-    <script src="viewjs/bootstrap.min.js"></script>
-    <script src="viewjs/app.js"></script>
+    <script src="view/js/bootstrap.min.js"></script>
+
 </body>
 </html>

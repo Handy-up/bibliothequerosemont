@@ -357,6 +357,13 @@ nav{
     /*border: 1px solid black;*/
 }
 
+.demande{
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 12px;
+}
+
+
 /* On screens that are 992px or less, set the background color to blue */
 @media screen and (max-width: 992px) {
     .navbar{
