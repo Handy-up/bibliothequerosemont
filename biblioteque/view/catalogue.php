@@ -13,6 +13,9 @@ $user_id = $_SESSION['currentUser_id'];
 if (count($controleur->getMessagesErreur())!=0){
     Warning("Recherche ! ",$controleur->getMessagesErreur()[0]);
 }
+if (count($controleur->getMessage())>1){
+    alert("Votre demade de prèt a été envoyer  ","avec succes");
+}
 ?>
 
 
@@ -39,6 +42,8 @@ if (count($controleur->getMessagesErreur())!=0){
                 card($data,$host,$holder,$lastHolder);
             }
             echo "<br>";
+        }else{
+            echo "<h4 class='text-center'> Rien a afficher pour le moment ! </h4>";
         }
         ?>
 

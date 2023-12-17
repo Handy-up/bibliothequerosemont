@@ -52,25 +52,29 @@ function card(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
     echo "<p class='card-text'><small class='text-body-secondary'><strong> Disponibilité :</strong> " . ($unLivre->isStatus() ? 'Disponible' : 'Non Disponible') . "</small></p>";
     echo "</div>";
 
-    $modalIdHost = uniqid('modal_host');
+    $modalIdHost = uniqid('modal_host'.$host->getId());
     echo "<span><strong>Propriétaire :</strong></span>";
-    modal("Utilisateur", $host, ($host->getFirstName() . " " . $host->getLastName()),"modal_2");
+    modal("Utilisateur", $host, ($host->getFirstName() . " " . $host->getLastName()),$modalIdHost);
     echo "<br>";
 
-    $modalIdHolder = uniqid('modal_holder');
+    $modalIdHolder = uniqid('modal_holder'.$holder->getId());
     echo "<span><strong>Détenteur actuel :</strong></span>";
-    modal("Utilisateur", $holder, ($holder->getFirstName() . " " . $holder->getLastName()),"modal_1");
+    modal("Utilisateur", $holder, ($holder->getFirstName() . " " . $holder->getLastName()),$modalIdHolder);
     echo "<br>";
 
-    $modalIdLastHolder = uniqid('modal_last_holder');
+    $modalIdLastHolder = uniqid('modal_last_holder'.$lastHolder->getId());
     echo "<span><strong>Ex-détenteur :</strong></span>";
-    modal("Utilisateur", $lastHolder, ($lastHolder->getFirstName() . " " . $lastHolder->getLastName()),"modal_0");
-    echo "<br>";
+        modal("Utilisateur", $lastHolder, ($lastHolder->getFirstName() . " " . $lastHolder->getLastName()), $modalIdLastHolder);
+        echo "<br>";
 
-    echo "<div class='action_card'>";
-    echo "<form class='float-end' action='?action=reserver' method='post'>";
+    echo "<form class='float-end' action='?action=catalogue' method='post'>";
+
+    // Champs cachés pour stocker les informations nécessaires
+    echo "<input type='hidden' name='id_detenteur' value='" . $holder->getId() . "'>";
+    echo "<input type='hidden' name='id_livre' value='" . $unLivre->getIdLivre() . "'>";
+
     $buttonStatus = $unLivre->isStatus() ? '' : 'disabled';
-    echo "<button class='btn btn-dark' value='" . $unLivre->getAuthor() . "' type='submit' name='res' $buttonStatus>Reserver</button>";
+    echo "<button class='btn btn-dark' value='" . $unLivre->getAuthor() . "' type='submit' name='reservation' $buttonStatus>Reserver</button>";
     echo "</form>";
 
     echo "</div>";
@@ -104,21 +108,24 @@ function cardList(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
     echo "<p class='card-text'><small class='text-body-secondary'><strong> Disponibilité :</strong> " . ($unLivre->isStatus() ? 'Disponible' : 'Non Disponible') . "</small></p>";
     echo "</div>";
 
-    $modalIdHost = uniqid('modal_host');
+    $modalIdHost = uniqid('modal_host_list'.$host->getId());
     echo "<span><strong>Propriétaire :</strong></span>";
-    modal("Utilisateur", $host, ($host->getFirstName() . " " . $host->getLastName()),"modal_2");
+    modal("Utilisateur", $host, ($host->getFirstName() . " " . $host->getLastName()),$modalIdHost);
     echo "<br>";
 
-    $modalIdHolder = uniqid('modal_holder');
+    $modalIdHolder = uniqid('modal_holder_list'.$holder->getId());
     echo "<span><strong>Détenteur actuel :</strong></span>";
-    modal("Utilisateur", $holder, ($holder->getFirstName() . " " . $holder->getLastName()),"modal_1");
+    modal("Utilisateur", $holder, ($holder->getFirstName() . " " . $holder->getLastName()),$modalIdHolder);
     echo "<br>";
 
-    $modalIdLastHolder = uniqid('modal_last_holder');
+    $modalIdLastHolder = uniqid('modal_last_holder_list'.$lastHolder->getId());
     echo "<span><strong>Ex-détenteur :</strong></span>";
-    modal("Utilisateur", $lastHolder, ($lastHolder->getFirstName() . " " . $lastHolder->getLastName()),"modal_0");
-    echo "<br>";
-
+    if(!($lastHolder == $holder && $holder == $host && $lastHolder == $host)) {
+        modal("Utilisateur", $lastHolder, ($lastHolder->getFirstName() . " " . $lastHolder->getLastName()), $modalIdLastHolder);
+        echo "<br>";
+    }else{
+        echo " Pas encore été échanger.";
+    }
     echo "<div class='action_card'>";
     echo "<form class='float-end' action='?action=reserver' method='post'>";
     $buttonStatus = $unLivre->isStatus() ? '' : 'disabled';
@@ -128,6 +135,58 @@ function cardList(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
     echo "</div>";
     echo "</div>";
     echo "</div>";
+}
+
+
+function afficherNotifications($notifications): void
+{
+    echo '<div class="container" id="my_notifs"> ';
+    echo '    <hr class="my-4 thicker-separator">';
+    echo '    <div class="list-group ">';
+
+    foreach ($notifications as $notification) {
+        echo '        <a href="#" class="list-group-item list-group-item-action ' . ($notification->getConsultation() ? '' : 'active') . '" aria-current="true">';
+        echo '            <div class="d-flex w-100 justify-content-between">';
+        echo '                <h5 class="mb-1">' . $notification->getDestinataire() . '</h5>';
+        echo '                <small>' . date('Y-m-d', strtotime($notification->getDateEnvoi())) . '</small>';
+        echo '            </div>';
+        echo '            <p class="mb-1">' . $notification->getContenu() . '</p>';
+        echo '            <small>' . ($notification->getConsultation() ? 'Consulté' : 'Non consulté') . '</small>';
+        echo '        </a>';
+    }
+    echo '    </div>';
+    echo '</div>';
+    echo '<br>';
+}
+
+function afficherNotificationsModals(array $listeDemandes): void
+{
+    echo '<div class="container d-none" id="my_demande" tabindex="-1">';
+    echo '    <hr class="my-4 thicker-separator">';
+    foreach ($listeDemandes as $demande) {
+
+        echo '    <div class="modal-dialog demande">';
+        echo '        <div class="modal-content">';
+        echo '            <div class="modal-header">';
+        echo '                <h5 class="modal-title">Non demandeur</h5>';
+        echo '            </div>';
+        echo '            <div class="modal-body">';
+        echo '                <p>Information demande</p>';
+        echo '                <p>ID Demande : ' . $demande->getIdDemande() . '</p>';
+        echo '                <p>ID Demandeur : ' . $demande->getIdDemandeur() . '</p>';
+        echo '                <p>ID Détenteur : ' . $demande->getIdDetenteur() . '</p>';
+        echo '                <p>Statut Demande : ' . $demande->getStatuDemande() . '</p>';
+        echo '                <p>Date Envoi : ' . $demande->getDateEnvoie() . '</p>';
+        echo '            </div>';
+        echo '            <div class="modal-footer">';
+        echo '                <button type="button" class="btn btn-primary">Accepter</button>';
+        echo '                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Refusé</button>';
+        echo '            </div>';
+        echo '        </div>';
+        echo '    </div>';
+    }
+    echo '</div>';
+    echo '<br>';
 }
 
 

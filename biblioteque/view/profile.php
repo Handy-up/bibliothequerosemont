@@ -17,11 +17,19 @@ $_SESSION['currentUser_id'] = $user->getId();
                 <span>Statut : </span> <span><?php echo $user->isStatus() ? 'Actif' : 'Inactif'; ?></span>
             </div>
             <div>
-                <span>Membre depuis : </span> <span><?php echo $user->getRegistrationDate(); ?></span>
+                <span>Membre depuis : </span> <span><?php
+                    try {
+                        $date = new DateTime($user->getRegistrationDate());
+                        $dateFormatee = $date->format('Y-m-d');
+                        echo $dateFormatee;
+                    } catch (Exception $e) {
+                    }
+//                    echo $user->getRegistrationDate();
+                    ?></span>
             </div>
             <br>
             <div>
-                <span>Clé d'inscription :</span> <span><?php echo $user->getRegistrationKey(); ?></span>
+                <span>Code de partage :</span> <span><?php echo $user->getShareCode(); ?></span>
             </div>
         </div>
 
@@ -29,7 +37,7 @@ $_SESSION['currentUser_id'] = $user->getId();
             <?php
             // Vérifiez si l'utilisateur a une photo de profil définie
             $profilePhoto = $user->getProfilePhoto();
-            $profilePhotoUrl = $profilePhoto ? $profilePhoto : 'image/default-avatar%20copie.jpg';
+            $profilePhotoUrl = $profilePhoto ? $profilePhoto : 'view/image/defaultProfil.jpg';
             ?>
             <img src="<?php echo $profilePhotoUrl; ?>" class="rounded-circle" alt="...">
         </div>

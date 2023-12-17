@@ -148,7 +148,7 @@ class Livre
         $this->current_holder_id = $current_holder;
     }
 
-    public function getPreviousHolder(): int
+    public function getPreviousHolder()
     {
         return $this->previous_holder_id;
     }
@@ -178,6 +178,24 @@ class Livre
         $this->status = $status;
     }
 
+    public function getIdLivre(): int
+    {
+        return $this->id_livre;
+    }
+    public function getHostId(): int
+    {
+        return $this->host_id;
+    }
+
+    public function getCurrentHolderId(): int
+    {
+        return $this->current_holder_id;
+    }
+
+    public function getPreviousHolderId(): ?int
+    {
+        return $this->previous_holder_id;
+    }
 
 
     public function __toString(): string

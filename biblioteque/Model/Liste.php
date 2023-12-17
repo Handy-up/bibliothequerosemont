@@ -5,7 +5,7 @@ include_once("User.php");
 class Liste {
 
     private User $utilisateur;
-    private array $livres;
+    private ?array $livres;
 
     public function __construct($utilisateur, $livres)
     {

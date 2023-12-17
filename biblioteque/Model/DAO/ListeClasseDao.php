@@ -1,9 +1,9 @@
 <?php
 
 // inclusions
-include_once ("DaoBook.php");
+include_once ("DAOListe.php");
 
-class ListeClasseDao implements DaoBook
+class ListeClasseDao implements DAOListe
 {
 
 
@@ -12,7 +12,7 @@ class ListeClasseDao implements DaoBook
         // TODO: Implement showAll() method.
     }
 
-    static public function showFor($keyWord)
+    static public function showFor($id_user)
     {
         try {
             $con = ConnexionBD::getInstanceT();
@@ -21,7 +21,7 @@ class ListeClasseDao implements DaoBook
         }
         $id_livres = null;
         $querry = $con->prepare("SELECT * FROM bibliotheque_departemental.Liste WHERE utilisateur_id = ?");
-        $querry->execute(array($keyWord));
+        $querry->execute(array($id_user));
         $data = $querry->fetchAll(PDO::FETCH_ASSOC);
         foreach ($data as $enr){
             $id_livres[] = $enr['livre_id'];
@@ -42,18 +42,29 @@ class ListeClasseDao implements DaoBook
         // TODO: Implement update() method.
     }
 
-    static public function insert($infoUtilisateur)
+    static public function insert($id_livre, $id_utilisateur)
     {
-        // TODO: Implement insert() method.
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+        $querry = $con->prepare("INSERT INTO bibliotheque_departemental.Liste (livre_id, utilisateur_id) VALUES (?, ?)");
+        $querry->execute([$id_livre,$id_utilisateur]);
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
     }
 
-    static public function delete($object)
+    static public function delete($id_livre, $id_utilisateur)
     {
-        // TODO: Implement delete() method.
-    }
-
-    static public function filterBooks($title = null, $owner = null, $keyword = null, $currentHolder = null)
-    {
-        // TODO: Implement filterBooks() method.
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+        $querry = $con->prepare("DELETE FROM bibliotheque_departemental.Liste WHERE livre_id = ? AND utilisateur_id = ?");
+        $querry->execute([$id_livre, $id_utilisateur]);
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
     }
 }

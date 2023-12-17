@@ -7,8 +7,11 @@ class Catalogue extends Controller
     private $top_new;
     private $listresult;
 
+    private $message;
+
     public function __construct() {
         parent::__construct();
+        $this->message = [0];
     }
 
     public function getTop()
@@ -24,6 +27,11 @@ class Catalogue extends Controller
     public function getResult()
     {
         return $this->listresult;
+    }
+
+    public function getMessage()
+    {
+        return $this->message;
     }
 
     public function executerAction(): string
@@ -52,6 +60,19 @@ class Catalogue extends Controller
                 $this->messagesErreur= ["Aucun résultat pour $mot_cle"];
             }
         }
+
+        if (isset($_POST['reservation'])){
+            $id_detenteur = intval($_POST['id_detenteur']);
+            $id_livre = intval($_POST['id_livre']);
+            $id_demandeur = $_SESSION['currentUser']->getId();
+            $this->message = [
+                $id_detenteur,
+                $id_livre,
+                $id_livre
+            ];
+            LivreClassDao::creerDemandeEtNotifier($id_demandeur,$id_detenteur,$id_livre);
+        }
+
         // AffiCher la home page
         return "catalogue";
     }

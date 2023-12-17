@@ -22,6 +22,9 @@ if (isset($_GET['page'])){
                 <a class="nav-link" href="?action=admin&page=notification_admin">Notifications</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=cle" >Clé</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="?action=admin&page=out" >Quitter</a>
             </li>
         </ul>
@@ -66,7 +69,7 @@ if (isset($_GET['page'])){
                         echo date("M-Y");
                         ?></h6>
                     <h5 class="card-title">Demandes de clé </h5>
-                    <h2 class="card-text "> <?php if (isset($controleur))echo 12 ?></h2>
+                    <h2 class="card-text "> <?php if (isset($controleur))echo count($controleur->demandeCle()) ?></h2>
                 </div>
             </div>
 

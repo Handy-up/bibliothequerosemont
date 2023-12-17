@@ -165,8 +165,6 @@ class UtilisateurClassDao implements DaoUser
         }catch (Exception $e){
             throw new Exception("Connexion Impossible ".$e);
         }
-//        Recupéré les utilisateurs
-        $users = [];
         $querry = $con->prepare("select * from bibliotheque_departemental.Cle where cle_inscription=?");
         $querry->execute(array($key));
         $data = $querry->fetch(PDO::FETCH_ASSOC);
@@ -185,4 +183,61 @@ class UtilisateurClassDao implements DaoUser
     {
         // TODO: Implement delete() method.
     }
+
+    static public function demadeCle($email)
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        }catch (Exception $e){
+            throw new Exception("Connexion Impossible ".$e);
+        }
+
+        $querry = $con->prepare("INSERT INTO bibliotheque_departemental.Cle (email,date_dexpiration) value (?,NOW())");
+        $querry->execute([$email]);
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
+    }
+
+    static public function confirmDemadeCle($id_cle, $cle)
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        // Utilisation de la requête UPDATE pour mettre à jour la clé existante
+        $query = $con->prepare("UPDATE bibliotheque_departemental.Cle SET cle_inscription = ?, date_dexpiration = NOW() WHERE id_cle = ?");
+        $query->execute([$cle, $id_cle]);
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+    }
+
+
+    static public function ListedemadeCle()
+    {
+        $result = array(); // Utiliser un tableau pour stocker plusieurs résultats
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Cle WHERE cle_inscription IS NULL");
+        $query->execute();
+
+        // Utiliser fetchAll pour récupérer toutes les lignes correspondantes
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $result = $data;
+        }
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+
+        return $result;
+    }
+
 }
