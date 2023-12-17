@@ -57,7 +57,7 @@ if (isset($_GET['page'])){
                         echo date("M-Y");
                         ?></h6>
                     <h5 class="card-title">Livres du système</h5>
-                    <h2 class="card-text "> <?php if (isset($controleur))echo count($controleur->getLivres()); ?></h2>
+                   <!-- <h2 class="card-text "> <?/*php if (isset($controleur))echo count($controleur->getLivres()); */?></h2>-->
                 </div>
             </div>
 
