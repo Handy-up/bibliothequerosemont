@@ -20,16 +20,10 @@ $notifications = array(
     new Notification('2023-01-03 15:45:00', 'Utilisateur3', 'Contenu de la notification 3', false)
 );
 
-// Exemple d'utilisation avec une liste d'objets Demande
-$listeDemandes = array(
-    new Demande(1, 101, 201, 0, "2023-01-01 12:00:00"),
-    new Demande(2, 102, 202, 1, "2023-01-02 14:30:00"),
-    new Demande(3, 103, 203, 0, "2023-01-03 10:45:00")
-);
 
 afficherNotificationsModals((array)$controleur->getDemandes());
 
-afficherNotifications($notifications);
+afficherNotifications((array)$controleur->getNotifications());
 
 include("include/footer.php");
 ?>
