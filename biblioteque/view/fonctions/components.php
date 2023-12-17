@@ -154,10 +154,9 @@ function afficherNotifications($notifications): void
         echo '            <small>' . ($notification->getConsultation() ? 'Consulté' : 'Non consulté') . '</small>';
         echo '        </a>';
     }
-
     echo '    </div>';
-    echo '    <br>';
     echo '</div>';
+    echo '<br>';
 }
 
 function afficherNotificationsModals(array $listeDemandes): void
