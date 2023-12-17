@@ -11,7 +11,7 @@ class NotificationDao
         }
 
         try {
-            $query = $con->prepare("INSERT INTO notifications (destinataire_id, contenu, consultation, dateEnvoi) VALUES (?, ?, 0, NOW())");
+            $query = $con->prepare("INSERT INTO bibliotheque_departemental.Notification (destinataire, contenu, consulter) VALUES (?, ?, 0)");
             $query->execute(array($destinataire_id, $contenu));
             $query->closeCursor();
             ConnexionBD::fermerConnexion();
@@ -31,7 +31,7 @@ class NotificationDao
         }
 
         try {
-            $query = $con->prepare("UPDATE notifications SET consultation = 1 WHERE id_notification = ?");
+            $query = $con->prepare("UPDATE bibliotheque_departemental.Notification SET consulter = 1 WHERE id_notification = ?");
             $query->execute(array($notification_id));
             $query->closeCursor();
             ConnexionBD::fermerConnexion();
@@ -41,6 +41,4 @@ class NotificationDao
             return false;
         }
     }
-
-    // Ajoutez d'autres méthodes pour la gestion des notifications si nécessaire
 }
