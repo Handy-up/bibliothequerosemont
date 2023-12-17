@@ -1,37 +1,34 @@
 <?php
 //Lleyton
-class NotificationDAO {
-    private $db;
-
-    // Constructeur pour initialiser la connexion à la base de données
-    public function __construct(PDO $db) {
-        $this->db = $db;
-    }
-
+class NotificationClasseDAO {
+    
     // Méthode pour sauvegarder une nouvelle notification dans la base de données
-    public function saveNotification($message) {
+    public function saveNotification($contenu, $destinataire) {
+       $con= ConnexionBD::getInstanceT();
         $sql = "INSERT INTO notification (contenu, destinataire) VALUES (:contenu, :destinataire)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':contenu', $message, PDO::PARAM_STR);
-        $stmt->bindParam(':destinataire', $destinataire, PDO::PARAM_STR);
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+        $stmt->bindParam(':destinataire', $destinataire, PDO::PARAM_INT);
         
         return $stmt->execute();
     }
 
     // Méthode pour récupérer toutes les notifications de la base de données
     public function getAllNotifications() {
+        $con= ConnexionBD::getInstanceT();
         $sql = "SELECT * FROM notification ORDER BY destinataire DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $con->query($sql);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
    
     // Méthode pour mettre à jour une notification dans la base de données
-    public function updateNotification($id_notification, $message, $destinataire) {
+    public function updateNotification($id_notification, $contenu, $destinataire) {
+        $con= ConnexionBD::getInstanceT();
         $sql = "UPDATE notification SET contenu = :contenu, destinataire = :destinataire WHERE id_notification = :id_notification";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':contenu', $message, PDO::PARAM_STR);
-        $stmt->bindParam(':destinataire', $destinataire, PDO::PARAM_STR);
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+        $stmt->bindParam(':destinataire', $destinataire, PDO::PARAM_INT);
         $stmt->bindParam(':id_notification', $id_notification, PDO::PARAM_INT);
 
         return $stmt->execute();
@@ -39,8 +36,9 @@ class NotificationDAO {
 
     // Méthode pour supprimer une notification de la base de données par ID
     public function deleteNotification($id_notification) {
+        $con= ConnexionBD::getInstanceT();
         $sql = "DELETE FROM notification WHERE id_notification = :id_notification";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $con->prepare($sql);
         $stmt->bindParam(':id_notification', $id_notification, PDO::PARAM_INT);
 
         return $stmt->execute();
@@ -48,8 +46,9 @@ class NotificationDAO {
 
     // Méthode pour obtenir une notification par ID
     public function getNotificationById($id) {
+        $con= ConnexionBD::getInstanceT();
         $sql = "SELECT * FROM notification WHERE id_notification = :id_notification";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $con->prepare($sql);
         $stmt->bindParam(':id_notification', $id, PDO::PARAM_INT);
         $stmt->execute();
 
