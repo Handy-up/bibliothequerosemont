@@ -9,7 +9,7 @@ interface DaoUser{
     static public function showAll();
 
     // Fonction pour afficher avec un contrainte (mot clé)
-    static public function showFor($keyWord);
+    static public function showFor($id);
 
     //Fonction pour filtrer selon des critères prend un tableau en paramètre
     static public function showIf($conditions);

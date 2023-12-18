@@ -2,6 +2,13 @@
 if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
 include_once "fonctions/components.php";
+if (count($controleur->getMessagesErreur())>=2){
+    if ($controleur->getMessagesErreur()[1]==0){
+        Warning($controleur->getMessagesErreur()[0]," Essayer encore.");
+    }else{
+        alert($controleur->getMessagesErreur()[0]," Merci pour votre partage.");
+    }
+}
 ?>
     <br>
     <div class="container d-flex justify-content-between">
@@ -13,15 +20,10 @@ include_once "fonctions/components.php";
     </div>
 
 <?php
-// Exemple d'utilisation avec un tableau de notifications
-$notifications = array(
-    new Notification('2023-01-01 10:00:00', 'Utilisateur1', 'Contenu de la notification 1', false),
-    new Notification('2023-01-02 12:30:00', 'Utilisateur2', 'Contenu de la notification 2', true),
-    new Notification('2023-01-03 15:45:00', 'Utilisateur3', 'Contenu de la notification 3', false)
-);
 
 
-afficherNotificationsModals((array)$controleur->getDemandes());
+
+afficherNotificationsModals((array)$controleur->getDemandes(), $controleur);
 
 afficherNotifications((array)$controleur->getNotifications());
 

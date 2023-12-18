@@ -1,12 +1,14 @@
 <?php
 //Commencé par Lleyton
 class Notification {
+    private $id_notif;
     private $dateEnvoi;
     private $destinataire;
     private $contenu;
     private $consultation;
 
-    public function __construct($dateEnvoi, $destinataire, $contenu, $consultation) {
+    public function __construct($id_notif,$dateEnvoi, $destinataire, $contenu, $consultation) {
+        $this->id_notif =$id_notif;
         $this->dateEnvoi = $dateEnvoi;
         $this->destinataire = $destinataire;
         $this->contenu = $contenu;
@@ -43,6 +45,14 @@ class Notification {
 
     public function setConsultation($consultation) {
         $this->consultation = $consultation;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdNotif()
+    {
+        return $this->id_notif;
     }
 }
 ?>

@@ -26,6 +26,38 @@ function modal($title, $content, $btn, $modalId): void
 PHP;
 }
 
+function inputModal($buttonText, $modalTitle, $modalId,$id_demade) {
+    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modalId . '" data-bs-whatever="@mdo">' . $buttonText . '</button>';
+
+    echo '
+        <div class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="' . $modalId . 'Label">' . $modalTitle . '</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="?action=notification">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Code de partage:</label>
+                                <input type="text" class="form-control" id="recipient-name" name="code_departage" required>
+                            </div>
+                    </div>
+                    <input type="hidden" name="id_demande" value="' . $id_demade . '">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" name="sharecodeValidation">Confirmer l\'échange</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>';
+}
+
+
+
+
 function card(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
 {
     echo "<div class='container cart_body'>";
@@ -131,7 +163,6 @@ function cardList(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
     $buttonStatus = $unLivre->isStatus() ? '' : 'disabled';
     echo "<button class='btn btn-dark' value='" . $unLivre->getAuthor() . "' type='submit' name='res' $buttonStatus>Modifier</button>";
     echo "</form>";
-
     echo "</div>";
     echo "</div>";
     echo "</div>";
@@ -145,9 +176,9 @@ function afficherNotifications($notifications): void
     echo '    <div class="list-group ">';
 
     foreach ($notifications as $notification) {
-        echo '        <a href="#" class="list-group-item list-group-item-action ' . ($notification->getConsultation() ? '' : 'active') . '" aria-current="true">';
+        echo '        <a href="?action=notification&id='.$notification->getIdNotif().'" class="list-group-item list-group-item-action ' . ($notification->getConsultation() ? '' : 'active') . '" aria-current="true">';
         echo '            <div class="d-flex w-100 justify-content-between">';
-        echo '                <h5 class="mb-1">' . $notification->getDestinataire() . '</h5>';
+        echo '                <h5 class="mb-1">' . $_SESSION['currentUser']->getLastName() . '</h5>';
         echo '                <small>' . date('Y-m-d', strtotime($notification->getDateEnvoi())) . '</small>';
         echo '            </div>';
         echo '            <p class="mb-1">' . $notification->getContenu() . '</p>';
@@ -159,27 +190,32 @@ function afficherNotifications($notifications): void
     echo '<br>';
 }
 
-function afficherNotificationsModals(array $listeDemandes): void
+function afficherNotificationsModals(array $listeDemandes, $controller): void
 {
-    echo '<div class="container d-none" id="my_demande" tabindex="-1">';
+    if ($_SESSION['currentUser']->getId() == 0) {
+        echo '<div class="container" id="my_demande" tabindex="-1">';
+    } else {
+        echo '<div class="container d-none" id="my_demande" tabindex="-1">';
+    }
     echo '    <hr class="my-4 thicker-separator">';
     foreach ($listeDemandes as $demande) {
 
         echo '    <div class="modal-dialog demande">';
         echo '        <div class="modal-content">';
         echo '            <div class="modal-header">';
-        echo '                <h5 class="modal-title">Non demandeur</h5>';
+        echo '                <h5 class="modal-title"> '.
+            $controller->getuserById(
+                $demande->getIdDemandeur()
+            )->getFirstName().' veut te faire un emprunt</h5>';
         echo '            </div>';
         echo '            <div class="modal-body">';
-        echo '                <p>Information demande</p>';
-        echo '                <p>ID Demande : ' . $demande->getIdDemande() . '</p>';
-        echo '                <p>ID Demandeur : ' . $demande->getIdDemandeur() . '</p>';
-        echo '                <p>ID Détenteur : ' . $demande->getIdDetenteur() . '</p>';
-        echo '                <p>Statut Demande : ' . $demande->getStatuDemande() . '</p>';
-        echo '                <p>Date Envoi : ' . $demande->getDateEnvoie() . '</p>';
+        echo '                <p>Informations de la demande : </p>';
+        echo '                <span> <strong> Hey, salut ' . $controller->getuserById($demande->getIdDetenteur())->getFirstName() . '</span>';
+        echo '                <span> voudrais tu emprunter le livre :  </strong>' . $controller->getLivreById($demande->getIdLivreDemande())  . '</span>';
+        echo '                <span> <br>Demande envoyer le : ' . $demande->getDateEnvoie() . '</span>';
         echo '            </div>';
         echo '            <div class="modal-footer">';
-        echo '                <button type="button" class="btn btn-primary">Accepter</button>';
+        inputModal("Accepter", "Confirmation de l'échange ","modal".$demande->getIdDemande(),$demande->getIdDemande());
         echo '                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Refusé</button>';
         echo '            </div>';
         echo '        </div>';

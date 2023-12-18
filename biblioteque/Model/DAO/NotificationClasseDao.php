@@ -46,7 +46,7 @@ class NotificationClasseDAO  implements DAONotifications {
         return $stmt->execute();
     }
 
-    // Méthode pour obtenir une notification par ID
+    // Méthode pour obtenir une notification par ID destinataire
     static public function getNotificationById($id_destinataire) {
         $con = ConnexionBD::getInstanceT();
         $sql = "SELECT * FROM bibliotheque_departemental.Notification WHERE destinataire = :id_destinataire";
@@ -59,6 +59,7 @@ class NotificationClasseDAO  implements DAONotifications {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             // Création d'un nouvel objet Notification pour chaque ligne
             $notification = new Notification(
+                $row['id_notification'],
                 $row['date_envoie'],
                 $row['destinataire'],
                 $row['contenu'],
@@ -66,9 +67,18 @@ class NotificationClasseDAO  implements DAONotifications {
             );
             $notifications[] = $notification;
         }
-
         return $notifications;
     }
+
+    static public function setNotificationConst($id_notification): void
+    {
+        $con = ConnexionBD::getInstanceT();
+        $sql = "UPDATE bibliotheque_departemental.Notification SET  consulter = 1 WHERE id_notification = :id_notification";
+        $stmt = $con->prepare($sql);
+        $stmt->bindParam(':id_notification', $id_notification, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
 }
 
 ?>

@@ -4,8 +4,9 @@ class Admin extends Controller
 {
     private array $listesUtilisateurs;
     private array $listesLivres;
-
     private array $listeDemandeCle;
+    private $listeDemandes;
+    private $listeNotifications;
 
     /**
      * @throws Exception
@@ -16,6 +17,8 @@ class Admin extends Controller
         $this->listesUtilisateurs = UtilisateurClassDao::showAll();
         $this->listesLivres = LivreClassDao::showAll();
         $this->listeDemandeCle = UtilisateurClassDao::ListedemadeCle();
+        $this->listeDemandes = DemandeClassDao::showForDemande( $_SESSION['currentUser']->getId());
+        $this->listeNotifications = NotificationClasseDAO::getNotificationById($_SESSION['currentUser']->getId());
     }
 
     public function getUsers()
@@ -38,6 +41,38 @@ class Admin extends Controller
         return $this->listeDemandeCle;
     }
 
+    public function getuserById($idUser): User
+    {
+        return UtilisateurClassDao::showFor($idUser);
+    }
+
+    public function getAdminNotif()
+    {
+        return $this->listeNotifications;
+    }
+
+    public function getLivreById($idLivre): ?\Model\Livre
+    {
+        return LivreClassDao::showFor($idLivre);
+    }
+
+    public function getAdminDemandes()
+    {
+        return $this->listeDemandes;
+    }
+
+    public function coutNonConsultNotifs(): int
+    {
+        $unconsult = [];
+        foreach ($this->listeNotifications as $notification){
+            if ($notification->getConsultation() == 0){
+                $unconsult[] = $notification;
+            }
+        }
+        return count($unconsult);
+
+    }
+
 
     /**
      * @throws Exception
@@ -47,8 +82,25 @@ class Admin extends Controller
 
         if (isset($_GET['page'])) {
             if ($_GET['page'] == "out"){
-                unset($_SESSION['currentUser']);
-                unset($_SESSION['currentUser_id']);
+                // Détruire toutes les variables de session
+                session_start();
+                session_unset();
+                session_destroy();
+
+                // Facultatif : Supprimer le cookie de session côté client
+                if (ini_get("session.use_cookies")) {
+                    $params = session_get_cookie_params();
+                    setcookie(
+                        session_name(),
+                        '',
+                        time() - 42000,
+                        $params["path"],
+                        $params["domain"],
+                        $params["secure"],
+                        $params["httponly"]
+                    );
+                }
+
                 return "home";
             }
 

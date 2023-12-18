@@ -19,16 +19,20 @@ Class Login extends Controller {
 //            var_dump($user);
             //    verification de la connexion
             if (!$user) {
-
                 $this->messagesErreur[0] = "Identifiant ou password incorrecte.";
                 return "connection";
             } else {
+                if (session_status() == PHP_SESSION_NONE) {
+                    // Démarrer la session seulement si elle n'est pas déjà active
+                    session_start();
+                }
                 $this->messagesErreur[0] = 0;
                 $_SESSION['currentUser'] = $user[0];
                 if ($user[0]->getFonction() == "admin"){
                     header('Location: index.php?action=admin&page=stat');
                     return "admin";
                 }
+                header('Location: index.php?action=profile');
                 return "profile";
             }
         }

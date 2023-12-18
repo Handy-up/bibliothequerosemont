@@ -25,8 +25,41 @@ class NotificationT extends Controller
         return $this->listeNotifications;
     }
 
-    public function executerAction()
+    /**
+     * @throws Exception
+     */
+    public function getuserById($idUser): User
     {
+        return UtilisateurClassDao::showFor($idUser);
+    }
+
+    public function getLivreById($idLivre): ?\Model\Livre
+    {
+        return LivreClassDao::showFor($idLivre);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function executerAction(): string
+    {
+        if (isset($_GET['id'])){
+            NotificationClasseDAO::setNotificationConst($_GET['id']);
+            header('Location: index.php?action=notification');
+            exit();
+        }
+
+        if (isset($_POST['sharecodeValidation'])){
+            if (strcasecmp($_POST['code_departage'], $_SESSION['currentUser']->getShareCode()) === 0) {
+                DemandeClassDao::confirmerDemandeEtNotifier(
+                    $_POST['id_demande'],
+                    $_SESSION['currentUser']->getId()
+                );
+                $this->messagesErreur = ["L'échange est éfféctuer consulter votre Liste !",1];
+            } else {
+                $this->messagesErreur = ["Code de partage incorrecte!",0];
+            }
+        }
         return "notification";
     }
 }

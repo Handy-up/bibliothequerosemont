@@ -9,13 +9,21 @@ class Demande
     private int $id_livre_demande;
     private String $date_envoie;
 
-    public function __construct(int $id_demande, int $id_demandeur, int $id_detenteur, int $statu_demande, String $date_envoie)
+    public function __construct(
+        int $id_demande,
+        int $id_demandeur,
+        int $id_detenteur,
+        int $statu_demande,
+        String $date_envoie,
+        int $id_livre_demande
+    )
     {
         $this->id_demande = $id_demande;
         $this->id_demandeur = $id_demandeur;
         $this->id_detenteur = $id_detenteur;
         $this->statu_demande = $statu_demande;
         $this->date_envoie = $date_envoie;
+        $this->id_livre_demande = $id_livre_demande;
     }
 
     public function getIdDemande(): int
@@ -77,6 +85,7 @@ class Demande
     {
         $this->date_envoie = $date_envoie;
     }
+
 
     public function isComplet():bool
     {

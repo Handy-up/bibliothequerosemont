@@ -23,7 +23,8 @@ class DemandeClassDao implements DAODemande
                 $row['detenteur_actuel'],
                 $row['demandeur'],
                 $row['statut'],
-                $row['date_demande']
+                $row['date_demande'],
+                $row['livre_id']
             );
             $requests[] = $demande;
         }
@@ -42,7 +43,7 @@ class DemandeClassDao implements DAODemande
             throw new Exception("Connexion Impossible " . $e);
         }
 
-        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Demande WHERE detenteur_actuel = ?");
+        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Demande WHERE demandeur = ?");
         $query->execute([$id_detanteur]);
         $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -50,10 +51,11 @@ class DemandeClassDao implements DAODemande
         foreach ($data as $row) {
             $demande = new Demande(
                 $row['id_demande'],
-                $row['demandeur'],
                 $row['detenteur_actuel'],
+                $row['demandeur'],
                 $row['statut'],
-                $row['date_demande']
+                $row['date_demande'],
+                $row['livre_id']
             );
             $demandes[] = $demande;
         }
@@ -98,4 +100,23 @@ class DemandeClassDao implements DAODemande
         $query->closeCursor();
         ConnexionBD::fermerConnexion();
     }
+
+    static public function confirmerDemandeEtNotifier($demandeId, $echangeurId): void
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("CALL ConfirmerDemandeEtNotifier(:p_demande_id, :p_echangeur_id)");
+        $query->bindParam(':p_demande_id', $demandeId, PDO::PARAM_INT);
+        $query->bindParam(':p_echangeur_id', $echangeurId, PDO::PARAM_INT);
+        $query->execute();
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+    }
+
+
 }

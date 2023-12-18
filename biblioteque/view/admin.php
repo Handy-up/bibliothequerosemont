@@ -22,7 +22,19 @@ if (isset($_GET['page'])){
                 <a class="nav-link" href="?action=admin&page=notification_admin">Notifications</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?action=admin&page=cle" >Clé</a>
+                <a class="nav-link" href="?action=admin&page=demande_admin" >Demande clé</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=cle" >Demande d'ouvrage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=out" >Liste clé</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=out" >Expérience utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?action=admin&page=out" >Liste departement</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="?action=admin&page=out" >Quitter</a>
@@ -57,7 +69,7 @@ if (isset($_GET['page'])){
                         echo date("M-Y");
                         ?></h6>
                     <h5 class="card-title">Livres du système</h5>
-                   <!-- <h2 class="card-text "> <?/*php if (isset($controleur))echo count($controleur->getLivres()); */?></h2>-->
+                   <h2 class="card-text "> <?php if (isset($controleur))echo count($controleur->getLivres());?></h2>
                 </div>
             </div>
 

@@ -40,7 +40,7 @@ class UtilisateurClassDao implements DaoUser
         return $users;
     }
 
-    static public function showFor($keyWord)
+    static public function showFor($id)
     {
         $user = null;
         try {
@@ -50,7 +50,7 @@ class UtilisateurClassDao implements DaoUser
         }
 //        Recupéré les utilisateurs
         $querry = $con->prepare("select * from bibliotheque_departemental.Utilisateur where id_utilisateur=?");
-        $querry->execute(array($keyWord));
+        $querry->execute(array($id));
         $data = $querry->fetch();
 
         $user = new User(

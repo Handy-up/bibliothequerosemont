@@ -1,4 +1,4 @@
-<?php
+<?php if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
 $user  = $_SESSION['currentUser'];
 $_SESSION['currentUser_id'] = $user->getId();
@@ -69,13 +69,32 @@ $_SESSION['currentUser_id'] = $user->getId();
             </div>
         </div>
         <div class="card text-bg-danger mb-3" style="width: 18rem;">
-            <div class="card-header">Favoris</div>
+
+            <div class="card-header">Notifications</div>
             <div class="card-body">
-                <h5 class="card-title">2 Ouvrage</h5>
-                <p class="card-text">1 dans espace 1 vacant</p>
+                <h5 class="card-title"><?php
+                    if (isset($controleur)){
+                        echo $controleur->coutNonConsultNotifs();
+                    }
+                    ?> notification non conculté</h5>
+                <p class="card-text"><?php
+                    if (isset($controleur)){
+                        echo $controleur->countNotifications();
+                    }
+                    ?> notification</p>
             </div>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                <?php
+                if (isset($controleur)){
+                    echo $controleur->coutNonConsultNotifs();
+                }
+                ?>
+                <span class="visually-hidden">unread messages</span>
+  </span>
         </div>
     </div>
+
+<!--    Expérience-->
 
     <br><h2>Expérience</h2><br>
     <div class="accordion" id="accordionExample">

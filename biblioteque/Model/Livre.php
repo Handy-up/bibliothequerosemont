@@ -201,7 +201,7 @@ class Livre
     public function __toString(): string
     {
         // TODO: Implement __toString() method.
-        return "[Book]</br>Titre : $this->title</br>Auteur : $this->author</br>Description : $this->description</br> Disponibilité : " . ($this->status ? "disponible" : "non disponible") . "</br>Propriétaire : $this->host_id".var_dump($this->key_words);
+        return "[Livre] </br>Titre : $this->title</br>Auteur : $this->author</br>Description : $this->description.";
     }
 
 

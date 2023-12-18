@@ -72,6 +72,8 @@ class Compte extends Controller
             false);
             LivreClassDao::insert($livre);
             ListeClasseDao::insert($livre->getIdLivre(),$_SESSION['currentUser']->getId());
+            header('Location: index.php?action=profile');
+            exit();
         }
         return "compte";
     }
