@@ -69,7 +69,6 @@ $user_id = $_SESSION['currentUser_id'];
             <?php
 if (isset($controleur)) {
 
-
         $livreLis = $controleur->getListe();
         $livre = $livreLis->getLivres();
     if ($livre != null) {

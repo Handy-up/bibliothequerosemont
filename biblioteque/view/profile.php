@@ -1,4 +1,6 @@
-<?php if (!isset($controleur)) header("Location: ..\index.php");
+<?php use Model\Livre;
+
+if (!isset($controleur)) header("Location: ..\index.php");
 require("include/header.php");
 $user  = $_SESSION['currentUser'];
 $_SESSION['currentUser_id'] = $user->getId();
@@ -96,51 +98,108 @@ $_SESSION['currentUser_id'] = $user->getId();
 
 <!--    Expérience-->
 
-    <br><h2>Expérience</h2><br>
-    <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Mon expérience 12 nov 2023 (ouvrage)
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+    <?php
+    // Exemple de données pour les utilisateurs, les livres et les expériences
+    $user = $_SESSION['currentUser'];
+    $id_livre = 1;
+    $title = "Le Seigneur des Anneaux";
+    $author = "J.R.R. Tolkien";
+    $editor = "HarperCollins";
+    $key_words = ["fantasy", "aventure", "anneaux"];
+    $description = "Une épopée fantastique dans un monde imaginaire.";
+    $cover = "path/to/cover.jpg";  // Remplacez par le chemin réel de l'image
+    $evaluation = "90%";  // Remplacez par la valeur réelle
+    $host_id = 123;  // Remplacez par l'ID réel de l'hôte
+    $current_holder_id = 456;  // Remplacez par l'ID réel du détenteur actuel
+    $previous_holder_id = 789;  // Remplacez par l'ID réel du détenteur précédent
+    $status = true;  // Remplacez par la valeur réelle
+
+    // Création d'une instance de Livre
+    $livre = new Livre(
+        $id_livre,
+        $title,
+        $author,
+        $editor,
+        $key_words,
+        $description,
+        $cover,
+        $evaluation,
+        $host_id,
+        $current_holder_id,
+        $previous_holder_id,
+        $status
+    );
+
+    $experiences = array(
+        new Experience(1,"12 nov 2023", $user, "Expérience 1", $livre),
+        new Experience(2,"19 nov 2023", $user, "Expérience 2", $livre),
+        new Experience(3,"7 Dec 2023", $user, "Expérience 3", $livre),
+    );
+
+    ?>
+
+    <div class="container">
+        <h2>Expérience</h2>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+
+        <?php foreach ($experiences as $key => $experience) : ?>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $key; ?>" aria-expanded="false" aria-controls="flush-collapse<?= $key; ?>">
+                        <?= "Mon expérience " . $experience->get_date_publication() . " (".$experience->get_livre()->getTitle().")"; ?>
+                    </button>
+                </h2>
+                <div id="flush-collapse<?= $key; ?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <strong><?= $experience->get_contenu(); ?></strong>
+                        <!-- Vous pouvez afficher d'autres détails de l'expérience ici -->
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Mon expérience 19 nov 2023 (ouvrage)
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Mon expérience 7 Dec 2023 (ouvrage)
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-            </div>
-        </div>
-        <br>
-        <button type="button" class="btn btn-primary float-end">Nouveau expérience</button>
-        <br><br>
+        <?php endforeach; ?>
     </div>
-<!--    End exp-->
-    <br>
+    </div>
+    <div class="float-end">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Partagé une Expérience</button>
+    </div>
+
+<!--    Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Partager mon expérience</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                Livre de ma liste
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                <li><button class="dropdown-item" type="button">Action</button></li>
+                                <li><button class="dropdown-item" type="button">Another action</button></li>
+                                <li><button class="dropdown-item" type="button">Something else here</button></li>
+                            </ul>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Expérience</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+    <br><br><br>
+
+
 
 
 

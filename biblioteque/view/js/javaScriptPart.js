@@ -5,6 +5,7 @@ let labelVal = document.getElementById("labelNotif");
 let titreBalise = document.getElementById("titre");
 let boxNotifs = document.getElementById("my_notifs");
 let boxDemande = document.getElementById("my_demande");
+
 switchebtn.addEventListener("change", function () {
     if (this.checked) {
         labelVal.innerText = "Afficher les notifications";
@@ -18,3 +19,4 @@ switchebtn.addEventListener("change", function () {
         titreBalise.innerText = "Notifications";
     }
 });
+

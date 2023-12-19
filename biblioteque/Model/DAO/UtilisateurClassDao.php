@@ -240,4 +240,62 @@ class UtilisateurClassDao implements DaoUser
         return $result;
     }
 
+    static public function ListeCle()
+    {
+        $result = array(); // Utiliser un tableau pour stocker plusieurs résultats
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("SELECT * FROM bibliotheque_departemental.Cle where cle_inscription is not null ");
+        $query->execute();
+
+        // Utiliser fetchAll pour récupérer toutes les lignes correspondantes
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $result = $data;
+        }
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+
+        return $result;
+    }
+
+    static public function showAllAvalable(){
+        $user = null;
+        try {
+            $con = ConnexionBD::getInstanceT();
+        }catch (Exception $e){
+            throw new Exception("Connexion Impossible ".$e);
+        }
+//        Recupéré les utilisateurs
+        $users = [];
+        $querry = $con->prepare("select * from bibliotheque_departemental.Utilisateur where statut=1");
+        $querry->execute();
+        $data = $querry->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($data as $enr){
+            $user = new User(
+                $enr['id_utilisateur'],
+                $enr['nom'],
+                $enr['prenom'],
+                $enr['mot_de_passe'],
+                $enr['photo_profile'],
+                $enr['code_de_partage'],
+                $enr['cle_inscription'],
+                $enr['date_inscription'],
+                $enr['statut'],
+                $enr['fonction']
+            );
+            $users[] = $user;
+        }
+        $querry->closeCursor();
+        ConnexionBD::fermerConnexion();
+        return $users;
+    }
+
 }

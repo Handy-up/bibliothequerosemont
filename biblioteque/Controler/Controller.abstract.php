@@ -27,7 +27,6 @@ abstract class Controller
     // ****************** Méthode privée
     private function determinerActeur(): void
     {
-        session_start();
         if (isset($_SESSION['currentUser'])) {
             $this->acteur = "utilisateur";
         }

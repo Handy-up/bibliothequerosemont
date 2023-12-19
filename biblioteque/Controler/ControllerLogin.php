@@ -7,7 +7,7 @@ Class Login extends Controller {
         $this->messagesErreur = [0];
     }
 
-    public function executerAction()
+    public function executerAction(): string
     {
         if (isset($_POST["connect"])) {
 //    echo "form send";

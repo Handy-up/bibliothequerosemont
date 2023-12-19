@@ -5,20 +5,34 @@ class Admin extends Controller
     private array $listesUtilisateurs;
     private array $listesLivres;
     private array $listeDemandeCle;
-    private $listeDemandes;
-    private $listeNotifications;
+    private array $listeDemandes;
+    private array $listeNotifications;
+    private array $echangesParmois;
+    private $listeLivreAdmin;
 
     /**
      * @throws Exception
      */
     public function __construct() {
         parent::__construct();
+        if (session_status() == PHP_SESSION_NONE) {
+            // Démarrer la session seulement si elle n'est pas déjà active
+            session_start();
+        }
         $this->messagesErreur = [0];
         $this->listesUtilisateurs = UtilisateurClassDao::showAll();
         $this->listesLivres = LivreClassDao::showAll();
         $this->listeDemandeCle = UtilisateurClassDao::ListedemadeCle();
+        $this->echangesParmois = DemandeClassDao::getExchangesByMonth();
         $this->listeDemandes = DemandeClassDao::showForDemande( $_SESSION['currentUser']->getId());
         $this->listeNotifications = NotificationClasseDAO::getNotificationById($_SESSION['currentUser']->getId());
+        if(ListeClasseDao::showFor($_SESSION['currentUser']->getId())){
+            foreach (ListeClasseDao::showFor($_SESSION['currentUser']->getId()) as $id){
+                if(LivreClassDao::showFor($id) != null){
+                    $this->listeLivreAdmin[] = LivreClassDao::showFor($id);
+                }
+            }
+        }
     }
 
     public function getUsers()
@@ -61,6 +75,26 @@ class Admin extends Controller
         return $this->listeDemandes;
     }
 
+    public function getEchanges()
+    {
+        return $this->echangesParmois;
+    }
+
+    public function countDispoLivre(): int
+    {
+        return count(LivreClassDao::showAllAvalable());
+    }
+
+    public function countAvalableUser(): int
+    {
+        return count(UtilisateurClassDao::showAllAvalable());
+    }
+
+    public function listeCle(): array
+    {
+        return UtilisateurClassDao::ListeCle();
+    }
+
     public function coutNonConsultNotifs(): int
     {
         $unconsult = [];
@@ -73,6 +107,11 @@ class Admin extends Controller
 
     }
 
+    public function getListeLivreadmin(): array
+    {
+        return $this->listeLivreAdmin;
+    }
+
 
     /**
      * @throws Exception
@@ -83,7 +122,6 @@ class Admin extends Controller
         if (isset($_GET['page'])) {
             if ($_GET['page'] == "out"){
                 // Détruire toutes les variables de session
-                session_start();
                 session_unset();
                 session_destroy();
 

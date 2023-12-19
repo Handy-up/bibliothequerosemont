@@ -10,11 +10,14 @@ class Experience {
     private $livre;
 
     // Constructeur avec valeur par défaut pour la couleur si non spécifiée
-    public function __construct($date_publication,$utilisateur,$contenu,$livre) {
+    private $id;
+
+    public function __construct($id,$date_publication,$utilisateur,$contenu,$livre) {
         $this->date_publication = $date_publication;
         $this->utilisateur = $utilisateur;
         $this->contenu = $contenu;
         $this->livre = $livre;
+        $this->id=$id;
     }
     // Accesseurs
     public function get_date_publication() {
@@ -31,17 +34,27 @@ class Experience {
     }
     
     // Mutateurs
-    public function set_date_publication($valeurDatePublication) {
+    public function set_date_publication($valeurDatePublication): void
+    {
         $this->date_publication=$valeurDatePublication;
     }
-    public function set_utilisateur($valeurUtilisateur) {
+    public function set_utilisateur($valeurUtilisateur): void
+    {
         $this->utilisateur=$valeurUtilisateur;
     }
-    public function set_contenu($valeurContenu) {
+    public function set_contenu($valeurContenu): void
+    {
         $this->contenu=$valeurContenu;
     }
-    public function set_livre($valeurLivre) {
+    public function set_livre($valeurLivre): void
+    {
         $this->livre=$valeurLivre;
+    }
+
+    public function getId(): int
+    {
+        // Retournez l'identifiant de l'expérience
+        return $this->id;
     }
 
     // Méthodes spécifiques

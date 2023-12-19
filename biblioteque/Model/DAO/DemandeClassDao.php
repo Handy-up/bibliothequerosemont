@@ -118,5 +118,33 @@ class DemandeClassDao implements DAODemande
         ConnexionBD::fermerConnexion();
     }
 
+    static public function getExchangesByMonth(): array
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("SELECT COUNT(*) as total, MONTH(date_echange) as month
+                            FROM bibliotheque_departemental.Echanges
+                            GROUP BY month
+                            ORDER BY month");
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $monthlyExchanges = array();
+
+        foreach ($data as $row) {
+            $monthName = date("F", mktime(0, 0, 0, $row['month'], 1));
+            $monthlyExchanges[] = array("y" => $row['total'], "label" => $monthName);
+        }
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+        return $monthlyExchanges;
+    }
+
+
 
 }

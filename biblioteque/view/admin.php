@@ -22,19 +22,19 @@ if (isset($_GET['page'])){
                 <a class="nav-link" href="?action=admin&page=notification_admin">Notifications</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?action=admin&page=demande_admin" >Demande clé</a>
+                <a class="nav-link" href="?action=admin&page=cle" >Demande clé</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?action=admin&page=cle" >Demande d'ouvrage</a>
+                <a class="nav-link" href="?action=admin&page=demande_admin" >Demande d'ouvrage</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?action=admin&page=out" >Liste clé</a>
+                <a class="nav-link" href="?action=admin&page=listeCle" >Liste clé</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="?action=admin&page=out" >Expérience utilisateurs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="?action=admin&page=out" >Liste departement</a>
+                <a class="nav-link" href="?action=admin&page=listeLivreAdmin" >Liste departement</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="?action=admin&page=out" >Quitter</a>
@@ -91,11 +91,11 @@ if (isset($_GET['page'])){
 
                     <div>
                         <span class="card-title">Utilisateurs actif</span>
-                        <span class="card-text"> <strong><h4>12</h4></strong> </span>
+                        <span class="card-text"> <strong><h4><?php if (isset($controleur))echo $controleur->countAvalableUser() ?></h4></strong> </span>
                     </div>
                     <div>
                         <span class="card-title">Ouvrages disponible</span>
-                        <span class="card-text"> <strong><h4>52</h4></strong> </span>
+                        <span class="card-text"> <strong><h4><?php if (isset($controleur))echo $controleur->countDispoLivre() ?></h4></strong> </span>
                     </div>
                 </div>
             </div>
@@ -112,25 +112,12 @@ if (isset($_GET['page'])){
 </div>
 
 <?php
-$dataPoints = array(
-    array("y" => 12, "label" => "Janvier" ),
-    array("y" => 5, "label" => "Février" ),
-    array("y" => 5, "label" => "Mars" ),
-    array("y" => 3, "label" => "Avril" ),
-    array("y" => 34, "label" => "Mai" ),
-    array("y" => 34, "label" => "Juin" ),
-    array("y" => 63, "label" => "Juillet" ),
-    array("y" => 63, "label" => "Aout" ),
-    array("y" => 3, "label" => "Septembre" ),
-    array("y" => 3, "label" => "Novembre" ),
-    array("y" => 3, "label" => "Décembre" )
-);
+$dataPoints = $controleur->getEchanges();
 ?>
 
 <!-- Srcipt -->
 <script>
     window.onload = function() {
-
         var chart = new CanvasJS.Chart("chartContainer", {
             animationEnabled: true,
             theme: "light2",
@@ -149,7 +136,7 @@ $dataPoints = array(
         chart.render();
     }
 </script>
-<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
 
 <?php
 include("include/footer.php");

@@ -5,7 +5,13 @@ $user  = $_SESSION['currentUser'];
 $_SESSION['currentUser_id'] = $user->getId();
 ?>
 <div class="container">
-    <h2>Paramètres</h2>
+    <div class="d-flex justify-content-between">
+        <h2>Paramètres</h2>
+        <div class="form-check form-switch align-self-end ">
+            <label for="showhideChars"></label><input class="form-check-input" type="checkbox" role="switch" id="showhideChars">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Afficher les caractères caché</label>
+        </div>
+    </div>
     <hr class="my-4 thicker-separator">
 
     <div class="forme_params">
@@ -32,7 +38,7 @@ $_SESSION['currentUser_id'] = $user->getId();
 
             <div class="mb-3">
                 <label for="code" class="form-label">Code de partage</label>
-                <input type="text" class="form-control" aria-describedby="basic-addon1" name="code_partage" value="<?php echo $user->getShareCode(); ?>" id="code">
+                <input type="password" class="form-control" aria-describedby="basic-addon1" name="code_partage" value="<?php echo $user->getShareCode(); ?>" id="code">
             </div>
             <br>
             <div class="col-12">
@@ -50,6 +56,22 @@ $_SESSION['currentUser_id'] = $user->getId();
     </div>
     <br>
 </div>
+<script>
+    let switchForShowChars = document.getElementById("showhideChars");
+    let inputPassword = document.getElementById("mdp");
+    let inputShareCode = document.getElementById("code");
+    switchForShowChars.addEventListener("change", function (){
+        if (this.checked) {
+            // Afficher les caractères cachés
+            inputPassword.type = "text";
+            inputShareCode.type = "text";
+        } else {
+            // Cacher les caractères
+            inputPassword.type = "password";
+            inputShareCode.type = "password";
+        }
+    });
+</script>
 <?php
 
 include("include/footer.php");

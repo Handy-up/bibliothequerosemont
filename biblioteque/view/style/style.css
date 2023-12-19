@@ -434,26 +434,11 @@ nav{
 
 /* Main CSS Here */
 
-:root {
-    --background-color1: #fafaff;
-    --background-color2: #ffffff;
-    --background-color3: #ededed;
-    --background-color4: #cad7fda4;
-    --primary-color: #4b49ac;
-    --secondary-color: #0c007d;
-    --Border-color: #3f0097;
-    --one-use-color: #3f0097;
-    --two-use-color: #5500cb;
-}
-body {
-    background-color: var(--background-color4);
-    max-width: 100%;
-    overflow-x: hidden;
-}
 
 .nav-admin {
     position: fixed;
     /*border: 10px solid black;*/
+    overflow-x: hidden;
 }
 
 .main-container {
@@ -497,7 +482,6 @@ body {
 .nav {
     min-height: 91vh;
     width: 250px;
-    background-color: var(--background-color2);
     position: absolute;
     top: 0px;
     left: 00px;
@@ -558,19 +542,6 @@ body {
 }
 .box:hover {
     transform: scale(1.08);
-}
-
-.box:nth-child(1) {
-    background-color: var(--one-use-color);
-}
-.box:nth-child(2) {
-    background-color: var(--two-use-color);
-}
-.box:nth-child(3) {
-    background-color: var(--one-use-color);
-}
-.box:nth-child(4) {
-    background-color: var(--two-use-color);
 }
 
 

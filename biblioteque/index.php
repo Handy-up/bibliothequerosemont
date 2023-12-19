@@ -22,6 +22,7 @@ include_once "Model/Liste.php";
 include_once "Model/Demande.php";
 include_once "Model/Notification.php";
 include_once "view/fonctions/message.php";
+
 //Obtenir le bon controleur
 if (!ISSET($_GET['action'])) {
     $action = "";
@@ -30,6 +31,13 @@ if (!ISSET($_GET['action'])) {
 }
 
 $controleur = MainController::creerControleur($action);
+
+if ($controleur->getActeur() !=="visiteur"){
+    if (session_status() == PHP_SESSION_NONE) {
+        // Démarrer la session seulement si elle n'est pas déjà active
+        session_start();
+    }
+}
 
 // Executer l'action et obtener le nom de la vue
 $nomVue=$controleur->executerAction();
@@ -42,5 +50,6 @@ $allert = 0;
 // inclure la bonne vue
 //echo "[Page "."view/".$nomVue.".php]";
 //echo "Page :".$nomVue;
+//echo "Id session : ". session_id();
 include_once("view/".$nomVue.".php");
 ?>

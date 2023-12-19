@@ -26,11 +26,12 @@ function modal($title, $content, $btn, $modalId): void
 PHP;
 }
 
-function inputModal($buttonText, $modalTitle, $modalId,$id_demade) {
+function inputModal($buttonText, $modalTitle, $modalId,$id_demade): void
+{
     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modalId . '" data-bs-whatever="@mdo">' . $buttonText . '</button>';
 
     echo '
-        <div class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
+        <div class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="' . $modalId . 'Label" aria-hidden="true" data-bs-backdrop="false">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -159,9 +160,13 @@ function cardList(\Model\Livre $unLivre, $host, $holder, $lastHolder): void
         echo " Pas encore été échanger.";
     }
     echo "<div class='action_card'>";
-    echo "<form class='float-end' action='?action=reserver' method='post'>";
-    $buttonStatus = $unLivre->isStatus() ? '' : 'disabled';
-    echo "<button class='btn btn-dark' value='" . $unLivre->getAuthor() . "' type='submit' name='res' $buttonStatus>Modifier</button>";
+    echo "<form class='float-end' action='?action=compte' method='post'>";
+    $buttonStatus = $unLivre->isStatus() ? 'dark' : 'danger';
+    $buttonTexte = $unLivre->isStatus() ? 'Conserver' : 'Rendre disponible';
+    $setDisponible = $unLivre->isStatus() ? 0 : 1;
+    echo "<input type='hidden' name='newStatus' value='" . $setDisponible . "'>";
+    echo "<input type='hidden' name='id_livre' value='" . $unLivre->getIdLivre() . "'>";
+    echo "<button class='btn btn-".$buttonStatus."' type='submit' name='Setdispo'>$buttonTexte</button>";
     echo "</form>";
     echo "</div>";
     echo "</div>";

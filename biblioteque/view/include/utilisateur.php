@@ -27,10 +27,10 @@ if ($users) {
                 <td>' . $user->getRegistrationDate() . '</td>
                 <td>' . $user->getShareCode() . '</td>
                 <td>' . $user->getRegistrationKey() . '</td>
-                <td>' . ($user->isStatus() ? "Actif" : "Inactif") . '</td>
+                <td id="statuUser">' . ($user->isStatus() ? "Actif" : "Inactif") . '</td>
                 <td>' . $user->getFonction() . '</td>
                 <td>
-                    <button type="button" class="btn btn-primary">Action</button>
+                    <button type="button" class="btn btn-primary" id="setUserStatu">Action</button>
                 </td>
               </tr>';
     }
@@ -41,3 +41,4 @@ if ($users) {
 }
 
 ?>
+

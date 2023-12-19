@@ -9,6 +9,10 @@ class NotificationT extends Controller
      */
     public function __construct() {
         parent::__construct();
+        if (session_status() == PHP_SESSION_NONE) {
+            // Démarrer la session seulement si elle n'est pas déjà active
+            session_start();
+        }
         $this->messagesErreur = [0];
         $this->listeDemandes = DemandeClassDao::showForDemande( $_SESSION['currentUser']->getId());
         $this->listeNotifications = NotificationClasseDAO::getNotificationById($_SESSION['currentUser']->getId());
@@ -45,8 +49,6 @@ class NotificationT extends Controller
     {
         if (isset($_GET['id'])){
             NotificationClasseDAO::setNotificationConst($_GET['id']);
-            header('Location: index.php?action=notification');
-            exit();
         }
 
         if (isset($_POST['sharecodeValidation'])){
@@ -59,6 +61,11 @@ class NotificationT extends Controller
             } else {
                 $this->messagesErreur = ["Code de partage incorrecte!",0];
             }
+        }
+
+        if ($_SESSION['currentUser']->getId()==0){
+            header('Location: index.php?action=admin&page=demande_admin');
+            exit();
         }
         return "notification";
     }

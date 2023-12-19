@@ -11,6 +11,10 @@ class Compte extends Controller
      */
     public function __construct() {
         parent::__construct();
+        if (session_status() == PHP_SESSION_NONE) {
+            // Démarrer la session seulement si elle n'est pas déjà active
+            session_start();
+        }
         $this->messagesErreur = [0];
         if(ListeClasseDao::showFor($_SESSION['currentUser']->getId())){
             foreach (ListeClasseDao::showFor($_SESSION['currentUser']->getId()) as $id){
@@ -48,6 +52,9 @@ class Compte extends Controller
         return $this->liste;
     }
 
+    /**
+     * @throws Exception
+     */
     public function executerAction(): string
     {
         if (isset($_POST['add_book'])){
@@ -73,6 +80,11 @@ class Compte extends Controller
             LivreClassDao::insert($livre);
             ListeClasseDao::insert($livre->getIdLivre(),$_SESSION['currentUser']->getId());
             header('Location: index.php?action=profile');
+            exit();
+        }
+        if (isset($_POST['Setdispo'])){
+            LivreClassDao::updateStatus($_POST['id_livre'],$_POST['newStatus']);
+            header('Location: index.php?action=compte');
             exit();
         }
         return "compte";
