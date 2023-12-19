@@ -66,6 +66,23 @@ class DemandeClassDao implements DAODemande
         return $demandes;
     }
 
+    static public function countDemandeSend($id_detanteur): int
+    {
+        try {
+            $con = ConnexionBD::getInstanceT();
+        } catch (Exception $e) {
+            throw new Exception("Connexion Impossible " . $e);
+        }
+
+        $query = $con->prepare("SELECT COUNT(*) as DemandeEnAttente FROM bibliotheque_departemental.Demande WHERE detenteur_actuel = ?");
+        $query->execute([$id_detanteur]);
+        $data = $query->fetch();
+
+        $query->closeCursor();
+        ConnexionBD::fermerConnexion();
+        return $data['DemandeEnAttente'];
+    }
+
     static public function showIfDemande($conditions)
     {
         // TODO: Implement showIfDemande() method.

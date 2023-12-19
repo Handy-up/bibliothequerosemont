@@ -52,22 +52,40 @@ $_SESSION['currentUser_id'] = $user->getId();
         <div class="card text-bg-primary mb-3" style="width: 18rem;">
             <div class="card-header">Demande</div>
             <div class="card-body">
-                <h5 class="card-title">5 demande</h5>
+                <h5 class="card-title">
+                    <?php
+                    if (isset($controleur)){
+                        echo $controleur->countDemande();
+                    }
+                    ?>
+                    demande</h5>
                 <p class="card-text">En attende</p>
             </div>
         </div>
         <div class="card text-bg-secondary mb-3" style="width: 18rem;">
             <div class="card-header">Confirmation</div>
             <div class="card-body">
-                <h5 class="card-title">5 demande</h5>
+                <h5 class="card-title"><?php
+                    if (isset($controleur)){
+                        echo $controleur->countDemandeSend();
+                    }
+                    ?> demande</h5>
                 <p class="card-text">En attende de confirmation</p>
             </div>
         </div>
         <div class="card text-bg-success mb-3" style="width: 18rem;">
             <div class="card-header">Liste</div>
             <div class="card-body">
-                <h5 class="card-title">8 Ouvrage</h5>
-                <p class="card-text">3 Porpriétaire</p>
+                <h5 class="card-title"><?php
+                    if (isset($controleur)){
+                        echo $controleur->coutListe();
+                    }
+                    ?> Ouvrage</h5>
+                <p class="card-text"><?php
+                    if (isset($controleur)){
+                        echo $controleur->coutLivreHost();
+                    }
+                    ?> Porpriétaire</p>
             </div>
         </div>
         <div class="card text-bg-danger mb-3" style="width: 18rem;">
