@@ -7,7 +7,7 @@
 interface ConfigurationBD
 {
     const BD_HOST = "localhost";
-    const BD_USER = "root";
-    const BD_PASS_WORD= "@Luisetmoi103";
+    const BD_USER = "votre_nom_utilisateur";
+    const BD_PASS_WORD= "votre_mot_de_passe";
     const BD_NAME = "bibliotheque_departemental";
 }
