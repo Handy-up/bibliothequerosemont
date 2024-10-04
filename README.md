@@ -1,57 +1,75 @@
-# 👋 Hello developer!
+# Bibliothèque départementale Cégep de Rosemont
 
-This is one of the many templates available from W3Schools. We recommend exploring our [tutorials for frontend development](https://www.w3schools.com/where_to_start.asp) to gain a comprehensive understanding of the basics of [HTML](https://www.w3schools.com/html/default.asp), [CSS](https://www.w3schools.com/css/default.asp) and [JavaScript](https://www.w3schools.com/js/default.asp). As a supplement to your already advanced skills in PHP, we also recommend utilizing our [PHP tutorial](https://www.w3schools.com/php/default.asp) to enhance your coding experience.🦄
+## Description
 
-## Knowledge requirements
+Le département d’informatique du cégep dispose d’un ensemble de livres répartis entre les professeurs. Cette mini-bibliothèque fonctionne d’une manière différente des autres bibliothèques (municipale) : il n’y a pas de notion d’emprunt et donc pas de date de retour. Les professeurs détiennent les livres aussi longtemps qu’ils le jugent nécessaire et les livres passent d’un professeur à un autre sur une simple entente entre les professeurs.
 
-In order to fully comprehend and tailor this template to your specific requirements, it is recommended that you possess a certain level of knowledge and understanding of the following concepts:
+## Contrainte
 
-- [HTML](https://www.w3schools.com/html/default.asp)
-- [CSS](https://www.w3schools.com/css/default.asp)
-- [JavaScript](https://www.w3schools.com/js/default.asp)
-- [PHP](https://www.w3schools.com/php/default.asp)
+💡 Testé uniquement avec les environnements ci-dessous :
 
-## 🔨 What's next?
+- Mac/Windows
+- PhpMyAdmin
+- XAMPP
+- Configuration de base avec PhpStorm et outils
+- Version de MySQL : 8.0.32
 
-Customize this template to make it your own.  
-Remember it is important to ensure that the layout is responsive in order to optimize the viewing experience on various screen sizes, including mobile devices.
+## Modèles
 
-## Important
+Consultez le fichier "Documentation" pour plus de détails.
 
-Save the files inside `src/`.
-## 🎨 Where to find everything?
+## Installation
 
-This template is made by using several technologies.
-Below are explanations about where to find specific code.
+### Cloner le projet
 
-### HTML
+Sur GitLab :
 
-The HTML is baked into PHP files. You can find the `index.php` in `src/`.
+Sur GitHub :
 
-### CSS
+### Création de la base de données
 
-CSS files can be found in `/src/style.css`.  
+💡Dans la structure du projet il y a un fichier srcip.sql qui contien l’ensemble de requetes de creation de la base de donné
 
-### Core files
+une mise en place de quelque procedure stoker pour vous permettre de préinsérer des donné dans la BD.
 
-You can find:
-  - the index in `src/index.php`.
+💡 Dans la structure du projet, un fichier `srcip.sql` contient l’ensemble des requêtes pour la création de la base de données ainsi que quelques procédures stockées pour préinsérer des données dans la BD.
 
-### Database
+- **Procédure d’insertion par défaut** : `inserer_livres_par_defaut()`
 
-Dynamic spaces can use [SQLite](https://www.sqlite.org/docs.html) database.  
-The database file is called `database.db`. It is placed inside the `w3s-dynamic-storage` folder.  
-SQLite connection path to the database is `w3s-dynamic-storage/database.db` which you can use to connect to the SQLite database programmatically.   
+NB : La version de MySQL est importante. Sur une version antérieure ou ultérieure, la portabilité du script pourrait être compromise.
 
----  
-**Do not change the `w3s-dynamic-storage` folder name or `database.db` file name!**  
-**By changing the `w3s-dynamic-storage` folder name or `database.db` file name, you risk the space not working properly.**
+### Modifier les paramètres de l’application
 
-## 🔨 Please note
-For now files created/uploaded or edited from within the terminal view will not be backed up or synced. 
+Dans le fichier `/bibliotheque/Model/DAO/Config/ConfigBD.interface.php`, modifiez les valeurs comme suit :
 
-## ⛑ Need support?
-[Join our Discord community](https://discord.gg/6Z7UaRbUQM) and ask questions in the **#spaces-general** channel to get your space on the next level.  
-[Send us a ticket](https://support.w3schools.com/hc/en-gb) if you have any technical issues with Spaces.
+```php
+<?php
+/** 
+ * Interface pour la configuration de la base de données
+ * Paramètres : hostname, userName, password, dataBaseName
+ */
+interface ConfigurationBD {
+    const BD_HOST = "localhost";
+    const BD_USER = "votre_nom_utilisateur";
+    const BD_PASS_WORD = "votre_mot_de_passe";
+    const BD_NAME = "bibliotheque_departementale";
+}
+?>
+```
 
-Happy coding!
+### Démarrer le projet
+
+Par défaut, un administrateur de test a été créé automatiquement :
+
+- **Nom d’utilisateur** : admin
+- **Mot de passe** : root
+
+## Auteurs et remerciements
+
+- Pierre Handy Charles G
+- Habimana Lleyton
+- Assiobo Kossi Mawuli Eloge
+
+## License
+
+[Bibliothèque départementale Cégep](https://github.com/Handy-up/bibliothequerosemont.git) © 2023 par Handy, Lleyton, Eloge est sous licence [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
